@@ -1,0 +1,177 @@
+.SignIn {
+  text-align: center;
+  background-color: #0D245D;
+  background-image: url('./desen.png');
+  background-repeat: repeat;
+  background-size: 150px 100px;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.App-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+.panel {
+  background-color: #fff;
+  padding: 5%; /* Responsive padding */
+  border-radius: 5px;
+  box-shadow: 
+    0 20px 40px rgba(0, 0, 0, 0.3),
+    0 40px 80px rgba(0, 0, 0, 0.3),
+    0 60px 120px rgba(0, 0, 0, 0.3);
+  width: 90vw; /* Responsive width based on viewport */
+  max-width: 400px; /* Maximum width limit */
+  min-height: 500px;
+  height: auto; /* Allow height to be dynamic */
+  margin: auto;
+}
+
+.App-logo {
+  height: 10vmin; /* Responsive logo size */
+  pointer-events: none;
+  margin-bottom: 20px;
+}
+
+.signup-form-container {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%; /* Ensure form takes full width */
+}
+
+.signup-form input {
+  background-color: #EAEDF5;
+  margin: 15px 0;
+  padding: 3%; /* Responsive padding */
+  font-size: 1rem;
+  width: 90%; /* Responsive width, allowing some padding */
+  max-width: 350px;
+  border-radius: 8px;
+  border: 1px solid #CFDAF6;
+}
+
+button {
+  padding: 3% 5%; /* Responsive padding */
+  font-size: 1rem;
+  background-color: #A6BAFC;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 90%; /* Responsive width */
+  max-width: 350px;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #0D245D;
+}
+.forgot-password-wrapper {
+  display: flex;
+  justify-content: flex-end; /* Align the forgot password to the right */
+  width: 100%;
+  max-width: 350px;
+}
+.forgot-password {
+  color: #007BFF;
+  font-size: 0.8rem;
+  margin-top: 10px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+.forgot-password:hover {
+  color: #0056b3;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align labels to the left */
+  width: 100%;
+  max-width: 350px;
+  margin-bottom: 15px;
+  position: relative;
+}
+.input-group label {
+  margin-bottom: 5px;
+  font-size: 15px;
+  color: #666666;
+}
+
+.language-buttons {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 20px; /* Add spacing between the buttons */
+}
+
+.language-buttons button {
+  padding: 7px 25px;
+  font-size: 1rem;
+  background-color: #0D245D;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.language-buttons button:hover {
+  background-color: #A6BAFC;
+}
+
+@media (max-width: 768px) {
+  .panel {
+    width: 95vw; /* Increase responsiveness on smaller screens */
+    max-width: 350px;
+  }
+  
+
+  .signup-form input, button {
+    font-size: 0.9rem;
+    padding: 2%;
+  }
+
+  .App-logo {
+    height: 12vmin; /* Adjust logo size for smaller screens */
+  }
+}
+
+@media (max-width: 480px) {
+  .panel {
+    padding: 6%;
+  }
+
+  .signup-form input, button {
+    font-size: 0.8rem;
+    padding: 2%;
+  }
+
+  .App-logo {
+    height: 14vmin;
+  }
+
+  .language-buttons {
+    gap: 10px; /* Adjust gap for smaller screens */
+  }
+}
