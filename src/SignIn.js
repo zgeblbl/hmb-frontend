@@ -19,17 +19,13 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const formData = {
-      userName: 'exampleUser',
-      password: 'examplePassword'
-    };
     try {
-      const response = await fetch('http://localhost:9090/api/auth/signin', {
+      const response = await fetch('http://localhost:9090/api/hmb/users/signin', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: formData //JSON.stringify(formData)
+        body: JSON.stringify(formData)
       });
 
       if (response.ok) {
