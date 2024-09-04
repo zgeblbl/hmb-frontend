@@ -30,7 +30,7 @@ function SignIn() {
       });
 
       if (response.ok) {
-        const result = await response.json();
+        const result = await response.text();
         console.log('Sign-in successful:', result);
         navigate('/home');
       } else {
