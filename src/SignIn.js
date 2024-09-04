@@ -5,7 +5,7 @@ import logoTr from './tr.svg';
 import './SignIn.css';
 
 function SignIn() {
-  const [formData, setFormData] = useState({userName: '',password: ''});
+  const [formData, setFormData] = useState({email: '',password: ''});
   const [language, setLanguage] = useState('en');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
@@ -19,19 +19,19 @@ function SignIn() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     try {
-      const response = await fetch('http://localhost:9090/api/hmb/users/signin', {
+      const response = await fetch('http://localhost:9090/api/hmb/users/signin', { // Doğru endpoint
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData) // userName ve password gönderiliyor
       });
 
       if (response.ok) {
         const result = await response.json();
         console.log('Sign-in successful:', result);
-        // Redirect to home page upon successful sign-in
         navigate('/home');
       } else {
         const errorText = await response.text();
@@ -65,9 +65,9 @@ function SignIn() {
                 <label htmlFor="email">{language === 'en' ? 'E-mail' : 'E-posta'}</label>
                 <input 
                   type="email" 
-                  id="userName" 
-                  name="userName" 
-                  value={formData.userName} 
+                  id="email" 
+                  name="email" 
+                  value={formData.email} 
                   onChange={handleChange} 
                   required 
                 />
