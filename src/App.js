@@ -1,7 +1,8 @@
-import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import SignIn from './SignIn';
 import ForgotPassword from './ForgotPassword';
+import HomePage from './HomePage';
+import UserQuery from './UserQuery';
 
 function App() {
   return (
@@ -9,10 +10,11 @@ function App() {
       <Routes>
         <Route path="/" element={<SignIn />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/home" element={<HomePage />} />
+        <Route path="/userquery" element={<UserQuery />} />
       </Routes>
     </Router>
   );
 }
 
 export default App;
- 

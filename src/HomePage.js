@@ -1,26 +1,47 @@
 import * as React from 'react';
-import './HomePage.css';
+import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom'; 
 import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
+import './HomePage.css';
+import './UserQuery.js';
 import zaferImage from './ZaferB.jpg';
 import oznurAbla from './OznurAbla.jpeg';
 import mehmetEmin from './MehmetEmin.jpeg';
 
 export default function HomePage() {
     const navigate = useNavigate();
+    const [anchorEl, setAnchorEl] = React.useState(null);
+
 
     const handleNavigation = (path) => {
         navigate(path);
     };
 
-    // Kullanıcının adı
-    const userName = "John Doe";
+    const handleMenuOpen = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
 
-    // Kullanıcının adının baş harfini al
-    const initials = userName.split(' ').map(name => name[0]).join('');
+    const handleMenuClose = () => {
+        setAnchorEl(null);
+    };
+
+    const location = useLocation(); 
+
+    const [userName, setUserName] = useState('');
+    const [initials, setInitials] = useState('');
+
+    useEffect(() => {
+        const loggedInUserName = location.state?.userName || 'John Doe';  
+        setUserName(loggedInUserName);
+        const userInitials = loggedInUserName.split(' ').map(name => name[0]).join('');
+        setInitials(userInitials);
+    }, [location]);
 
     // İlk satırdaki görsel verisi
     const itemDataRow1 = [
@@ -48,7 +69,6 @@ export default function HomePage() {
 
     // İkinci satırdaki görsel verisi
     const itemDataRow2 = [
-       
         {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Ataturk1930s.jpg/220px-Ataturk1930s.jpg',
             title: 'Atatürk',
@@ -69,7 +89,6 @@ export default function HomePage() {
             img: mehmetEmin,
             title: 'Emin abi',
         },
-        
     ];
 
     return (
@@ -84,7 +103,12 @@ export default function HomePage() {
                 </div>
                 <ul className="navbar-links">
                     <li onClick={() => handleNavigation('/dashboard')}>Dashboard</li>
-                    <li onClick={() => handleNavigation('/services')}>Services</li>
+                    <li 
+                        onMouseEnter={handleMenuOpen} 
+                        onClick={handleMenuOpen}
+                    >
+                        Services
+                    </li>
                     <li onClick={() => handleNavigation('/contact')}>Contact</li>
                 </ul>
                 <div className="navbar-profile">
@@ -92,12 +116,27 @@ export default function HomePage() {
                     <span>{userName}</span>
                 </div>
             </nav>
+            <Menu
+                anchorEl={anchorEl}
+                open={Boolean(anchorEl)}
+                onClose={handleMenuClose}
+                MenuListProps={{
+                    onMouseLeave: handleMenuClose,
+                }}
+            >
+                <MenuItem onClick={() => navigate('/leave-application')}>
+                    İzin Başvurusu
+                </MenuItem>
+                <MenuItem onClick={() => navigate('/userquery')}>
+                    Kullanıcı Sorgulama
+                </MenuItem>
+            </Menu>
             <main className="content">
                 <Box className="image-list-row">
                     <ImageList
                         sx={{
                             display: 'flex',
-                            gap: '0px', // Flexbox gap'i tamamen sıfırlıyoruz
+                            gap: '0px',
                             padding: '0',
                             margin: '0',
                         }}
@@ -106,10 +145,10 @@ export default function HomePage() {
                             <ImageListItem
                                 key={item.img}
                                 sx={{
-                                    flex: '1 0 0px', // Tüm öğeleri eşit şekilde boşluksuz olarak genişletiyoruz
-                                    margin: '0', // Marjin sıfırlıyoruz
-                                    padding: '0', // Padding sıfırlıyoruz
-                                    height: 'auto', // Yüksekliği otomatik yapıyoruz
+                                    flex: '1 0 0px',
+                                    margin: '0',
+                                    padding: '0',
+                                    height: 'auto',
                                 }}
                             >
                                 <img
@@ -122,8 +161,8 @@ export default function HomePage() {
                                         width: '100%',
                                         height: 'auto',
                                         objectFit: 'cover',
-                                        margin: '0', // Görselin kenarlarındaki boşlukları sıfırlıyoruz
-                                        padding: '0', // Görselin içindeki boşlukları sıfırlıyoruz
+                                        margin: '0',
+                                        padding: '0',
                                     }}
                                 />
                             </ImageListItem>
@@ -134,7 +173,7 @@ export default function HomePage() {
                     <ImageList
                         sx={{
                             display: 'flex',
-                            gap: '0px', // Flexbox gap'i tamamen sıfırlıyoruz
+                            gap: '0px',
                             padding: '0',
                             margin: '0',
                         }}
@@ -143,11 +182,11 @@ export default function HomePage() {
                             <ImageListItem
                                 key={item.img}
                                 sx={{
-                                    flex: '1 0 0px', // Tüm öğeleri eşit şekilde boşluksuz olarak genişletiyoruz
-                                    margin: '0', // Marjin sıfırlıyoruz
-                                    padding: '0', // Padding sıfırlıyoruz
-                                    height: '100px', // İkinci satırın yüksekliğini burada kısalttık
-                                    overflow: 'hidden', // Görsellerin taşmasını engellemek için overflow'u gizliyoruz
+                                    flex: '1 0 0px',
+                                    margin: '0',
+                                    padding: '0',
+                                    height: '100px',
+                                    overflow: 'hidden',
                                 }}
                             >
                                 <img
@@ -160,8 +199,8 @@ export default function HomePage() {
                                         width: '100%',
                                         height: '100%',
                                         objectFit: 'cover',
-                                        margin: '0', // Görselin kenarlarındaki boşlukları sıfırlıyoruz
-                                        padding: '0', // Görselin içindeki boşlukları sıfırlıyoruz
+                                        margin: '0',
+                                        padding: '0',
                                     }}
                                 />
                             </ImageListItem>
