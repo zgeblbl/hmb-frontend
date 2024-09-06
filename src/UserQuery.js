@@ -21,6 +21,8 @@ export default function UserQuery() {
     const [tckn, setTckn] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    const [results, setResults] = useState([]);
+
 
 
     useEffect(() => {
@@ -106,7 +108,7 @@ export default function UserQuery() {
                     onMouseLeave: handleMenuClose,
                 }}
             >
-                <MenuItem onClick={() => handleSubPageNavigation('/leave-application')}>
+                <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
                     İzin Başvurusu
                 </MenuItem>
                 <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
