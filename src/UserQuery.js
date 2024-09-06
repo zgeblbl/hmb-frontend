@@ -10,8 +10,8 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 export default function UserQuery() {
-    const navigate = useNavigate();
-    const location = useLocation();
+    const navigate1 = useNavigate();
+    const location1 = useLocation();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [tckn, setTckn] = React.useState('');
@@ -19,8 +19,8 @@ export default function UserQuery() {
     const [lastName, setLastName] = React.useState('');
 
     const handleNavigation = (path) => {
-        if (location.pathname !== path) {
-            navigate(path, { replace: true });
+        if (location1.pathname !== path) {
+            navigate1(path, { replace: true });
         } else {
             handleMenuClose();
         }
@@ -36,8 +36,8 @@ export default function UserQuery() {
 
     const handleSubPageNavigation = (path) => {
         handleMenuClose();
-        if (location.pathname !== path) {
-            navigate(path, { replace: true });
+        if (location1.pathname !== path) {
+            navigate1(path, { replace: true });
         }
     };
 

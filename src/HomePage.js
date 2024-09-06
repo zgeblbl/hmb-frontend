@@ -103,12 +103,7 @@ export default function HomePage() {
                 </div>
                 <ul className="navbar-links">
                     <li onClick={() => handleNavigation('/dashboard')}>Dashboard</li>
-                    <li 
-                        onMouseEnter={handleMenuOpen} 
-                        onClick={handleMenuOpen}
-                    >
-                        Services
-                    </li>
+                    <li onMouseEnter={handleMenuOpen} onClick={handleMenuOpen}>Services</li>
                     <li onClick={() => handleNavigation('/contact')}>Contact</li>
                 </ul>
                 <div className="navbar-profile">
@@ -127,8 +122,17 @@ export default function HomePage() {
                 <MenuItem onClick={() => navigate('/leave-application')}>
                     İzin Başvurusu
                 </MenuItem>
-                <MenuItem onClick={() => navigate('/userquery')}>
+                <MenuItem onClick={() => {
+                    navigate('/user-query');
+                    handleMenuClose();
+                }}>
                     Kullanıcı Sorgulama
+                </MenuItem>
+                <MenuItem onClick={() => {
+                    navigate('/deneme');
+                    handleMenuClose();
+                }}>
+                    Deneme
                 </MenuItem>
             </Menu>
             <main className="content">
