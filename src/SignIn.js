@@ -32,12 +32,9 @@ function SignIn() {
       if (response.ok) {
         const result = await response.json();  // JSON formatında veri alıyoruz
         const { firstName, lastName } = result;
-
-        // Konsolda firstName ve lastName bilgilerini kontrol et
-        console.log('Sign-in successful:', firstName, lastName);
-
-        // Kullanıcı adını ve soyadını navigate ile HomePage.js'ye geçir
-        navigate('/home', { state: { userName: `${firstName} ${lastName}` } });
+        localStorage.setItem('userName', `${firstName} ${lastName}`);
+        navigate('/home');
+        
       } else {
         const errorText = await response.text();
         setErrorMessage(errorText);

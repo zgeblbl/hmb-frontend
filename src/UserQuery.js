@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import './UserQuery.css';
 import './HomePage';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -11,18 +11,32 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
 export default function UserQuery() {
-    const navigate1 = useNavigate();
-    const location1 = useLocation();
+    const navigate = useNavigate();
+    const location = useLocation();
+    
+    // Kullanıcı adı ve baş harflerini tutmak için state oluşturuyoruz
+    const [userName, setUserName] = useState('');
+    const [initials, setInitials] = useState('');
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [tckn, setTckn] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [tckn, setTckn] = React.useState('');
-    const [firstName, setFirstName] = React.useState('');
-    const [lastName, setLastName] = React.useState('');
-    const [results, setResults] = React.useState([]);
+
+    useEffect(() => {
+        // localStorage'dan kullanıcı adını alıyoruz
+        const storedUserName = localStorage.getItem('userName') || 'John Doe';
+        setUserName(storedUserName);
+
+        // Baş harfleri ayarlıyoruz
+        const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
+        setInitials(userInitials);
+    }, []);
+
 
     const handleNavigation = (path) => {
-        if (location1.pathname !== path) {
-            navigate1(path, { replace: true });
+        if (location.pathname !== path) {
+            navigate(path, { replace: true });
         } else {
             handleMenuClose();
         }
@@ -38,10 +52,11 @@ export default function UserQuery() {
 
     const handleSubPageNavigation = (path) => {
         handleMenuClose();
-        if (location1.pathname !== path) {
-            navigate1(path, { replace: true });
+        if (location.pathname !== path) {
+            navigate(path, { replace: true });
         }
     };
+
 
     const handleQuery = async () => {
         try {
@@ -55,13 +70,8 @@ export default function UserQuery() {
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+
     };
-
-    // Kullanıcının adı
-    const userName = "John Doe";
-
-    // Kullanıcının adının baş harfini al
-    const initials = userName.split(' ').map(name => name[0]).join('');
 
     return (
         <div className="user-query">
@@ -74,7 +84,7 @@ export default function UserQuery() {
                     </h1>
                 </div>
                 <ul className="navbar-links">
-                    <li onClick={() => handleNavigation('/dashboard')}>Dashboard</li>
+                    <li onClick={() => handleNavigation('/home')}>Dashboard</li>
                     <li 
                         onMouseEnter={handleMenuOpen} 
                         onClick={handleMenuOpen}

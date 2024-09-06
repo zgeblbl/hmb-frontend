@@ -65,6 +65,11 @@ body {
     gap: 8px;
 }
 
+.navbar-profile li{
+    font-size: 16px;
+    color: #002B5C;
+}
+
 .profile-initials {
     width: 36px;
     height: 36px;
@@ -123,6 +128,9 @@ body {
     background-color: #002B5C; /* Lacivert arka plan */
     color: white; /* Beyaz metin rengi */
     text-align: center; /* Metin merkez hizası */
+    position: fixed;    /* Footer'ı sabitliyoruz */
+    width: 100%; 
+    bottom: 0;          /* Footer'ı sayfanın en altına koy */
     padding: 20px 0; /* Üst ve alt boşluk */
     font-size: 14px; /* Metin boyutu */
 }

@@ -2,46 +2,62 @@ import * as React from 'react';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom'; 
 import { useNavigate } from 'react-router-dom';
+import './HomePage.css';
 import logo from './logo.svg';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import './HomePage.css';
-import './UserQuery.js';
+import ProfilePanel from './ProfilePanel'; 
 import zaferImage from './ZaferB.jpg';
 import oznurAbla from './OznurAbla.jpeg';
 import mehmetEmin from './MehmetEmin.jpeg';
+import { AppBar, Toolbar, Typography, Button} from '@mui/material';
 
 export default function HomePage() {
     const navigate = useNavigate();
-    const [anchorEl, setAnchorEl] = React.useState(null);
 
+    // Services menüsü için state
+    const [servicesAnchorEl, setServicesAnchorEl] = React.useState(null);
 
-    const handleNavigation = (path) => {
-        navigate(path);
+    // UserName menüsü için state
+    const [profileAnchorEl, setProfileAnchorEl] = React.useState(null);
+
+    // Services menüsünü açma/kapama
+    const handleServicesMenuOpen = (event) => {
+        setServicesAnchorEl(event.currentTarget);
     };
 
-    const handleMenuOpen = (event) => {
-        setAnchorEl(event.currentTarget);
+    const handleServicesMenuClose = () => {
+        setServicesAnchorEl(null);
     };
 
-    const handleMenuClose = () => {
-        setAnchorEl(null);
+    // Profil menüsünü açma/kapama
+    const handleProfileMenuOpen = (event) => {
+        setProfileAnchorEl(event.currentTarget);
     };
 
-    const location = useLocation(); 
+    const handleProfileMenuClose = () => {
+        setProfileAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        console.log('Çıkış yapıldı');
+        navigate('/');
+    };
 
     const [userName, setUserName] = useState('');
     const [initials, setInitials] = useState('');
 
     useEffect(() => {
-        const loggedInUserName = location.state?.userName || 'John Doe';  
-        setUserName(loggedInUserName);
-        const userInitials = loggedInUserName.split(' ').map(name => name[0]).join('');
+        const storedUserName = localStorage.getItem('userName') || 'John Doe';
+        setUserName(storedUserName);
+    
+        const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setInitials(userInitials);
-    }, [location]);
+    }, []);
+    
 
     // İlk satırdaki görsel verisi
     const itemDataRow1 = [
@@ -67,8 +83,7 @@ export default function HomePage() {
         },
     ];
 
-    // İkinci satırdaki görsel verisi
-    const itemDataRow2 = [
+    /*const itemDataRow2 = [
         {
             img: 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/a8/Ataturk1930s.jpg/220px-Ataturk1930s.jpg',
             title: 'Atatürk',
@@ -89,7 +104,7 @@ export default function HomePage() {
             img: mehmetEmin,
             title: 'Emin abi',
         },
-    ];
+    ]*/
 
     return (
         <div className="homepage">
@@ -102,31 +117,75 @@ export default function HomePage() {
                     </h1>
                 </div>
                 <ul className="navbar-links">
-                    <li onClick={() => handleNavigation('/dashboard')}>Dashboard</li>
-                    <li onMouseEnter={handleMenuOpen} onClick={handleMenuOpen}>Services</li>
-                    <li onClick={() => handleNavigation('/contact')}>Contact</li>
+                    <li onClick={() => navigate('/home')}>Dashboard</li>
+                    <li 
+                        onMouseEnter={handleServicesMenuOpen} 
+                        onClick={handleServicesMenuOpen}
+                    >
+                        Services
+                    </li>
+                    <li onClick={() => navigate('/contact')}>Contact</li>
                 </ul>
+                {/* Sağ üst köşede profil kısmı */}
                 <div className="navbar-profile">
                     <div className="profile-initials">{initials}</div>
-                    <span>{userName}</span>
+                    <li 
+                        onMouseEnter={handleProfileMenuOpen} 
+                        onClick={handleProfileMenuOpen}
+                        style={{ cursor: 'pointer', listStyleType: 'none' }}
+                    >
+                        {userName}
+                    </li>
                 </div>
             </nav>
+
+            {/* Services menüsü */}
             <Menu
-                anchorEl={anchorEl}
-                open={Boolean(anchorEl)}
-                onClose={handleMenuClose}
+                anchorEl={servicesAnchorEl}
+                open={Boolean(servicesAnchorEl)}
+                onClose={handleServicesMenuClose}
                 MenuListProps={{
-                    onMouseLeave: handleMenuClose,
+                    onMouseLeave: handleServicesMenuClose,
+                }}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
                 }}
             >
                 <MenuItem onClick={() => navigate('/leave-application')}>
                     İzin Başvurusu
                 </MenuItem>
-                <MenuItem onClick={() => {
-                    navigate('/userquery');
-                    handleMenuClose();
-                }}>
+                <MenuItem onClick={() => navigate('/userquery')}>
                     Kullanıcı Sorgulama
+                </MenuItem>
+            </Menu>
+
+            {/* Kullanıcı adı menüsü */}
+            <Menu
+                anchorEl={profileAnchorEl}
+                open={Boolean(profileAnchorEl)}
+                onClose={handleProfileMenuClose}
+                MenuListProps={{
+                    onMouseLeave: handleProfileMenuClose,
+                }}
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'right',
+                }}
+                transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'right',
+                }}
+            >
+                <MenuItem onClick={() => navigate('/profile-settings')}>
+                    Profil Ayarları
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                    Çıkış Yap
                 </MenuItem>
             </Menu>
             <main className="content">
@@ -158,44 +217,6 @@ export default function HomePage() {
                                         borderRadius: '8px',
                                         width: '100%',
                                         height: 'auto',
-                                        objectFit: 'cover',
-                                        margin: '0',
-                                        padding: '0',
-                                    }}
-                                />
-                            </ImageListItem>
-                        ))}
-                    </ImageList>
-                </Box>
-                <Box className="image-list-row">
-                    <ImageList
-                        sx={{
-                            display: 'flex',
-                            gap: '0px',
-                            padding: '0',
-                            margin: '0',
-                        }}
-                    >
-                        {itemDataRow2.map((item) => (
-                            <ImageListItem
-                                key={item.img}
-                                sx={{
-                                    flex: '1 0 0px',
-                                    margin: '0',
-                                    padding: '0',
-                                    height: '100px',
-                                    overflow: 'hidden',
-                                }}
-                            >
-                                <img
-                                    src={`${item.img}?w=248&fit=crop&auto=format`}
-                                    srcSet={`${item.img}?w=248&fit=crop&auto=format&dpr=2 2x`}
-                                    alt={item.title}
-                                    loading="lazy"
-                                    style={{
-                                        borderRadius: '8px',
-                                        width: '100%',
-                                        height: '100%',
                                         objectFit: 'cover',
                                         margin: '0',
                                         padding: '0',
