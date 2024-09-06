@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export default function UserQuery() {
     const navigate1 = useNavigate();
@@ -17,6 +18,7 @@ export default function UserQuery() {
     const [tckn, setTckn] = React.useState('');
     const [firstName, setFirstName] = React.useState('');
     const [lastName, setLastName] = React.useState('');
+    const [results, setResults] = React.useState([]);
 
     const handleNavigation = (path) => {
         if (location1.pathname !== path) {
@@ -41,11 +43,18 @@ export default function UserQuery() {
         }
     };
 
-    const handleQuery = () => {
-        // Burada sorgulama işleminizi gerçekleştirin.
-        console.log('Sorgulanan TCKN:', tckn);
-        console.log('Sorgulanan İsim:', firstName);
-        console.log('Sorgulanan Soyisim:', lastName);
+    const handleQuery = async () => {
+        try {
+            const response = await fetch(`/api/hmb/users/search?tckn=${tckn}&name=${firstName}&surname=${lastName}`);
+            if (response.ok) {
+                const data = await response.json();
+                setResults(data);
+            } else {
+                console.error('Error fetching data:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
     };
 
     // Kullanıcının adı
@@ -90,7 +99,7 @@ export default function UserQuery() {
                 <MenuItem onClick={() => handleSubPageNavigation('/leave-application')}>
                     İzin Başvurusu
                 </MenuItem>
-                <MenuItem onClick={() => handleSubPageNavigation('/user-query')}>
+                <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
                     Kullanıcı Sorgulama
                 </MenuItem>
             </Menu>
@@ -129,6 +138,17 @@ export default function UserQuery() {
                     >
                         Sorgula
                     </Button>
+                    <Box sx={{ marginTop: '20px' }}>
+                        {results.length > 0 ? (
+                            results.map(user => (
+                                <Typography key={user.userId} variant="body1">
+                                    {user.name} {user.surname} - TCKN: {user.tckn}
+                                </Typography>
+                            ))
+                        ) : (
+                            <Typography>No results found</Typography>
+                        )}
+                    </Box>
                 </Box>
             </main>
         </div>

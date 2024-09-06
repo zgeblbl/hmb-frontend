@@ -123,16 +123,10 @@ export default function HomePage() {
                     İzin Başvurusu
                 </MenuItem>
                 <MenuItem onClick={() => {
-                    navigate('/user-query');
+                    navigate('/userquery');
                     handleMenuClose();
                 }}>
                     Kullanıcı Sorgulama
-                </MenuItem>
-                <MenuItem onClick={() => {
-                    navigate('/deneme');
-                    handleMenuClose();
-                }}>
-                    Deneme
                 </MenuItem>
             </Menu>
             <main className="content">
