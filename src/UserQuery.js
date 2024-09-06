@@ -8,6 +8,7 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 
 export default function UserQuery() {
     const navigate = useNavigate();
@@ -21,6 +22,7 @@ export default function UserQuery() {
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
+
     useEffect(() => {
         // localStorage'dan kullanıcı adını alıyoruz
         const storedUserName = localStorage.getItem('userName') || 'John Doe';
@@ -30,6 +32,7 @@ export default function UserQuery() {
         const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setInitials(userInitials);
     }, []);
+
 
     const handleNavigation = (path) => {
         if (location.pathname !== path) {
@@ -54,10 +57,20 @@ export default function UserQuery() {
         }
     };
 
-    const handleQuery = () => {
-        console.log('Sorgulanan TCKN:', tckn);
-        console.log('Sorgulanan İsim:', firstName);
-        console.log('Sorgulanan Soyisim:', lastName);
+
+    const handleQuery = async () => {
+        try {
+            const response = await fetch(`/api/hmb/users/search?tckn=${tckn}&name=${firstName}&surname=${lastName}`);
+            if (response.ok) {
+                const data = await response.json();
+                setResults(data);
+            } else {
+                console.error('Error fetching data:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+
     };
 
     return (
@@ -135,6 +148,17 @@ export default function UserQuery() {
                     >
                         Sorgula
                     </Button>
+                    <Box sx={{ marginTop: '20px' }}>
+                        {results.length > 0 ? (
+                            results.map(user => (
+                                <Typography key={user.userId} variant="body1">
+                                    {user.name} {user.surname} - TCKN: {user.tckn}
+                                </Typography>
+                            ))
+                        ) : (
+                            <Typography>No results found</Typography>
+                        )}
+                    </Box>
                 </Box>
             </main>
         </div>
