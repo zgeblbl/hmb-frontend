@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
 import './UserQuery.css';
 import './HomePage';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -12,11 +12,24 @@ import Box from '@mui/material/Box';
 export default function UserQuery() {
     const navigate = useNavigate();
     const location = useLocation();
+    
+    // Kullanıcı adı ve baş harflerini tutmak için state oluşturuyoruz
+    const [userName, setUserName] = useState('');
+    const [initials, setInitials] = useState('');
+    const [anchorEl, setAnchorEl] = useState(null);
+    const [tckn, setTckn] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    const [tckn, setTckn] = React.useState('');
-    const [firstName, setFirstName] = React.useState('');
-    const [lastName, setLastName] = React.useState('');
+    useEffect(() => {
+        // localStorage'dan kullanıcı adını alıyoruz
+        const storedUserName = localStorage.getItem('userName') || 'John Doe';
+        setUserName(storedUserName);
+
+        // Baş harfleri ayarlıyoruz
+        const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
+        setInitials(userInitials);
+    }, []);
 
     const handleNavigation = (path) => {
         if (location.pathname !== path) {
@@ -42,17 +55,10 @@ export default function UserQuery() {
     };
 
     const handleQuery = () => {
-        // Burada sorgulama işleminizi gerçekleştirin.
         console.log('Sorgulanan TCKN:', tckn);
         console.log('Sorgulanan İsim:', firstName);
         console.log('Sorgulanan Soyisim:', lastName);
     };
-
-    // Kullanıcının adı
-    const userName = "John Doe";
-
-    // Kullanıcının adının baş harfini al
-    const initials = userName.split(' ').map(name => name[0]).join('');
 
     return (
         <div className="user-query">
@@ -65,7 +71,7 @@ export default function UserQuery() {
                     </h1>
                 </div>
                 <ul className="navbar-links">
-                    <li onClick={() => handleNavigation('/dashboard')}>Dashboard</li>
+                    <li onClick={() => handleNavigation('/home')}>Dashboard</li>
                     <li 
                         onMouseEnter={handleMenuOpen} 
                         onClick={handleMenuOpen}
@@ -90,7 +96,7 @@ export default function UserQuery() {
                 <MenuItem onClick={() => handleSubPageNavigation('/leave-application')}>
                     İzin Başvurusu
                 </MenuItem>
-                <MenuItem onClick={() => handleSubPageNavigation('/user-query')}>
+                <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
                     Kullanıcı Sorgulama
                 </MenuItem>
             </Menu>

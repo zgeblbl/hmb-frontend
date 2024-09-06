@@ -37,11 +37,15 @@ export default function HomePage() {
     const [initials, setInitials] = useState('');
 
     useEffect(() => {
-        const loggedInUserName = location.state?.userName || 'John Doe';  
-        setUserName(loggedInUserName);
-        const userInitials = loggedInUserName.split(' ').map(name => name[0]).join('');
+        // localStorage'dan kullanıcı adını al
+        const storedUserName = localStorage.getItem('userName') || 'John Doe';
+        setUserName(storedUserName);
+    
+        // Baş harfleri ayarlıyoruz
+        const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setInitials(userInitials);
-    }, [location]);
+    }, []);
+    
 
     // İlk satırdaki görsel verisi
     const itemDataRow1 = [
@@ -102,7 +106,7 @@ export default function HomePage() {
                     </h1>
                 </div>
                 <ul className="navbar-links">
-                    <li onClick={() => handleNavigation('/dashboard')}>Dashboard</li>
+                    <li onClick={() => handleNavigation('/home')}>Dashboard</li>
                     <li 
                         onMouseEnter={handleMenuOpen} 
                         onClick={handleMenuOpen}
