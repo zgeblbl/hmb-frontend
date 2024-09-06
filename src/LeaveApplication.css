@@ -1,13 +1,9 @@
-body {
-    margin: 0;
+.leave-application {
     font-family: Arial, sans-serif;
-    background-color: #002B5C; /* Lacivert arka plan */
-}
-
-.homepage {
-    height: 100vh;
     display: flex;
     flex-direction: column;
+    min-height: 100vh;
+    background-color: #002B5C; /* Match background color */
 }
 
 .navbar {
@@ -65,11 +61,6 @@ body {
     gap: 8px;
 }
 
-.navbar-profile li{
-    font-size: 16px;
-    color: #002B5C;
-}
-
 .profile-initials {
     width: 36px;
     height: 36px;
@@ -90,60 +81,45 @@ body {
     font-weight: 500;
     line-height: 1;
 }
+
 .content {
+    padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+    flex: 1;
 }
 
-.image-list {
-    display: flex;
-    justify-content: space-between;
-    width: 100%;
-}
-
-.image-list img {
+.application-panel {
+    background-color: #f5f5f5;
+    padding: 20px;
     border-radius: 8px;
     width: 100%;
-    height: auto;
-    object-fit: cover;
+    max-width: 500px;
+    margin-top: 20px;
 }
 
-.image-list-item {
-    flex: 1;
-    max-width: 200px; /* Görsellerin daha küçük olması için max-width belirliyoruz */
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.image-list-row {
-    width: 100%;
-    background-color: #002B5C;
-    padding: 10px 0;
-}
-
-/* Footer Stilleri */
 .footer {
-    background-color: #002B5C; /* Lacivert arka plan */
-    color: white; /* Beyaz metin rengi */
-    text-align: center; /* Metin merkez hizası */
-    position: fixed;    /* Footer'ı sabitliyoruz */
-    width: 100%; 
-    bottom: 0;          /* Footer'ı sayfanın en altına koy */
-    padding: 20px 0; /* Üst ve alt boşluk */
-    font-size: 14px; /* Metin boyutu */
+    background-color: #002B5C; /* Match background color */
+    color: white; /* White text color */
+    text-align: center; /* Center text */
+    position: fixed; /* Fix position */
+    width: 100%;
+    bottom: 0;
+    padding: 20px 0;
+    font-size: 14px;
 }
+
 .language-buttons {
     display: flex;
     gap: 0.5rem;
-    position: fixed; /* Fixes the position relative to the viewport */
-    bottom: 4rem; /* Distance from the bottom of the viewport */
-    right: 1rem; /* Distance from the right edge of the viewport */
-    z-index: 1000; /* Ensure it appears above other content */
-    background-color: transparent; /* Transparent background to ensure visibility */
-    padding: 0.5rem; /* Padding for better visual appearance */
-    border-radius: 0.25rem; /* Rounded corners for aesthetic */
+    position: fixed;
+    bottom: 4rem;
+    right: 1rem;
+    z-index: 1000;
+    background-color: transparent;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
 }
 
 .language-buttons button {
@@ -158,6 +134,3 @@ body {
 .language-buttons button:hover {
     background-color: #0056b3;
 }
-
-
-

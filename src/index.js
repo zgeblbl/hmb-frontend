@@ -7,6 +7,7 @@ import ForgotPassword from './ForgotPassword';  // Import ForgotPassword compone
 import reportWebVitals from './reportWebVitals';
 import HomePage from './HomePage';
 import UserQuery from './UserQuery';
+import LeaveApplication from './LeaveApplication';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -17,6 +18,7 @@ root.render(
         <Route path="/forgot-password" element={<ForgotPassword />} />  {/* Route for ForgotPassword */}
         <Route path="/home" element={<HomePage />} />  {/* Route for HomePage */}
         <Route path="/userquery" element={<UserQuery />} />
+        <Route path="/leaveapplication" element={<LeaveApplication />} />
       </Routes>
     </Router>
   </React.StrictMode>
