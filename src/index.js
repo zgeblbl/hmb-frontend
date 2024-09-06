@@ -16,7 +16,7 @@ root.render(
         <Route path="/" element={<SignIn />} />  {/* Route for SignIn */}
         <Route path="/forgot-password" element={<ForgotPassword />} />  {/* Route for ForgotPassword */}
         <Route path="/home" element={<HomePage />} />  {/* Route for HomePage */}
-        <Route path="/user-query" element={<UserQuery />} />
+        <Route path="/userquery" element={<UserQuery />} />
       </Routes>
     </Router>
   </React.StrictMode>
