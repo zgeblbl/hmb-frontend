@@ -9,8 +9,9 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 export default function UserQuery() {
-    const navigate = useNavigate();
-    const location = useLocation();
+    console.log('UserQuery Component Rendered');
+    const navigate1 = useNavigate();
+    const location1 = useLocation();
 
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [tckn, setTckn] = React.useState('');
@@ -18,8 +19,8 @@ export default function UserQuery() {
     const [lastName, setLastName] = React.useState('');
 
     const handleNavigation = (path) => {
-        if (location.pathname !== path) {
-            navigate(path, { replace: true });
+        if (location1.pathname !== path) {
+            navigate1(path, { replace: true });
         } else {
             handleMenuClose();
         }
@@ -35,8 +36,8 @@ export default function UserQuery() {
 
     const handleSubPageNavigation = (path) => {
         handleMenuClose();
-        if (location.pathname !== path) {
-            navigate(path, { replace: true });
+        if (location1.pathname !== path) {
+            navigate1(path, { replace: true });
         }
     };
 
@@ -54,7 +55,7 @@ export default function UserQuery() {
     const initials = userName.split(' ').map(name => name[0]).join('');
 
     return (
-        <div className="user-query">
+        <div className="user-query"><h2>User Query Page</h2>
             <nav className="navbar">
                 <div className="navbar-logo">
                     <img src={logo} alt="Ministry Logo" />

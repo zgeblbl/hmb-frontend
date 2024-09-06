@@ -3,6 +3,7 @@ import SignIn from './SignIn';
 import ForgotPassword from './ForgotPassword';
 import HomePage from './HomePage';
 import UserQuery from './UserQuery';
+import Deneme from './Deneme';
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
         <Route path="/" element={<SignIn />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/home" element={<HomePage />} />
-        <Route path="/userquery" element={<UserQuery />} />
+        <Route path="/user-query" element={<UserQuery />} />
+        <Route path="/deneme" element={<Deneme />} />
       </Routes>
     </Router>
   );
