@@ -9,7 +9,6 @@ import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
 import './HomePage.css';
-import './UserQuery.js';
 import zaferImage from './ZaferB.jpg';
 import oznurAbla from './OznurAbla.jpeg';
 import mehmetEmin from './MehmetEmin.jpeg';
@@ -131,7 +130,10 @@ export default function HomePage() {
                 <MenuItem onClick={() => navigate('/leave-application')}>
                     İzin Başvurusu
                 </MenuItem>
-                <MenuItem onClick={() => navigate('/userquery')}>
+                <MenuItem onClick={() => {
+                    navigate('/userquery');
+                    handleMenuClose();
+                }}>
                     Kullanıcı Sorgulama
                 </MenuItem>
             </Menu>
