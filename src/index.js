@@ -6,6 +6,7 @@ import SignIn from './SignIn';  // Import SignIn component
 import ForgotPassword from './ForgotPassword';  // Import ForgotPassword component
 import reportWebVitals from './reportWebVitals';
 import HomePage from './HomePage';
+import UserQuery from './UserQuery';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,6 +16,7 @@ root.render(
         <Route path="/" element={<SignIn />} />  {/* Route for SignIn */}
         <Route path="/forgot-password" element={<ForgotPassword />} />  {/* Route for ForgotPassword */}
         <Route path="/home" element={<HomePage />} />  {/* Route for HomePage */}
+        <Route path="/userquery" element={<UserQuery />} />
       </Routes>
     </Router>
   </React.StrictMode>

@@ -1,5 +1,6 @@
 import * as React from 'react';
 import './UserQuery.css';
+import './HomePage';
 import { useNavigate, useLocation } from 'react-router-dom';
 import logo from './logo.svg';
 import Menu from '@mui/material/Menu';
