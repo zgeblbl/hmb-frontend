@@ -9,7 +9,6 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 
 export default function UserQuery() {
-    console.log('UserQuery Component Rendered');
     const navigate1 = useNavigate();
     const location1 = useLocation();
 
@@ -55,7 +54,7 @@ export default function UserQuery() {
     const initials = userName.split(' ').map(name => name[0]).join('');
 
     return (
-        <div className="user-query"><h2>User Query Page</h2>
+        <div className="user-query">
             <nav className="navbar">
                 <div className="navbar-logo">
                     <img src={logo} alt="Ministry Logo" />
