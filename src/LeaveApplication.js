@@ -14,6 +14,8 @@ export default function LeaveApplication() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [leaveDays, setLeaveDays] = useState('');
     const [reason, setReason] = useState('');
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
     const [language, setLanguage] = useState('en'); // Default language
     const [userName, setUserName] = useState('');
     const [initials, setInitials] = useState('');
@@ -95,6 +97,30 @@ export default function LeaveApplication() {
                         margin="normal"
                         value={leaveDays}
                         onChange={(e) => setLeaveDays(e.target.value)}
+                    />
+                    <TextField
+                        label={language === 'en' ? 'Start Date' : 'Başlangıç Tarihi'}
+                        type="date"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        value={startDate}
+                        onChange={(e) => setStartDate(e.target.value)}
+                    />
+                    <TextField
+                        label={language === 'en' ? 'End Date' : 'Bitiş Tarihi'}
+                        type="date"
+                        variant="outlined"
+                        fullWidth
+                        margin="normal"
+                        InputLabelProps={{
+                            shrink: true,
+                        }}
+                        value={endDate}
+                        onChange={(e) => setEndDate(e.target.value)}
                     />
                     <TextField
                         label={language === 'en' ? 'Reason for Leave' : 'İzin Nedeni'}
