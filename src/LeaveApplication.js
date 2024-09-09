@@ -60,7 +60,7 @@ export default function LeaveApplication() {
                     </h1>
                 </div>
                 <ul className="navbar-links">
-                    <li onClick={() => handleSubPageNavigation('/home')}>{language === 'en' ? 'Dashboard' : 'Gösterge Paneli'}</li>
+                    <li onClick={() => handleSubPageNavigation('/home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
                     <li onMouseEnter={handleMenuOpen} onClick={handleMenuOpen}>
                         {language === 'en' ? 'Services' : 'Hizmetler'}
                     </li>
