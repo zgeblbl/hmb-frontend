@@ -114,25 +114,26 @@
 }
 
 .language-buttons {
-    display: flex;
-    gap: 0.5rem;
     position: fixed;
-    bottom: 4rem;
-    right: 1rem;
-    z-index: 1000;
-    background-color: transparent;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-}
-
-.language-buttons button {
-    background-color: #007bff;
-    color: white;
+    bottom: 0; /* Butonları en alta sabitle */
+    left: 62%; /* Yatayda ortalamak için sol kenardan %50 uzaklık */
+    transform: translateX(-50%); /* Sol kenardan %50 uzaklık aldıktan sonra tam ortalamak için düzeltme */
+    display: flex;
+    gap: 20px; /* Butonlar arasındaki boşluk */
+    padding: 10px; /* Butonların alt kenarına biraz boşluk ekler */
+  }
+  
+  .language-buttons button {
+    padding: 7px 5px;
+    font-size: 1rem;
+    background-color: #0D245D;
     border: none;
-    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    color: white;
     cursor: pointer;
-    border-radius: 0.25rem;
-}
+    transition: background-color 0.3s ease;
+    width: 80px;
+  }
 
 .language-buttons button:hover {
     background-color: #0056b3;

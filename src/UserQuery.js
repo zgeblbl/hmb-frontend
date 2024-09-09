@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import './UserQuery.css';
 import './HomePage';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { DataGrid } from '@mui/x-data-grid';
 import logo from './logo.svg';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -61,19 +62,48 @@ export default function UserQuery() {
 
 
     const handleQuery = async () => {
+        const queryData = {
+            TCKN: tckn || "",  
+            firstName: firstName || "",
+            lastName: lastName || ""
+        };
+    
         try {
-            const response = await fetch(`/api/hmb/users/search?tckn=${tckn}&name=${firstName}&surname=${lastName}`);
+            const response = await fetch('http://localhost:9090/api/hmb/users/search', {  // backend portu doğru olmalı
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(queryData),
+            });
+    
             if (response.ok) {
                 const data = await response.json();
                 setResults(data);
+            } else if (response.status === 404) {
+                setResults([]); // No results found
             } else {
-                console.error('Error fetching data:', response.statusText);
+                console.error('Search failed:', response.statusText);
             }
         } catch (error) {
-            console.error('Error fetching data:', error);
+            console.error('Error during search:', error);
         }
-
     };
+    
+    const columns = [
+        { field: 'id', headerName: 'ID', width: 90 },  // Eğer backend id dönüyorsa
+        { field: 'firstName', headerName: 'İsim', width: 150 },
+        { field: 'lastName', headerName: 'Soyisim', width: 150 },
+        { field: 'TCKN', headerName: 'TCKN', width: 200 }
+    ];
+
+    // Gelen veriyi tablo için hazırlıyoruz
+    const rows = results.map((user, index) => ({
+        id: index + 1, // Her kullanıcıya unique bir ID veriyoruz, backend'den gelen id varsa kullan
+        firstName: user.firstName,
+        lastName: user.lastName,
+        TCKN: user.TCKN
+    }));
 
     return (
         <div className="user-query">
@@ -150,13 +180,15 @@ export default function UserQuery() {
                     >
                         Sorgula
                     </Button>
-                    <Box sx={{ marginTop: '20px' }}>
+                    <Box sx={{ height: 400, width: '100%', marginTop: '20px' }}>
                         {results.length > 0 ? (
-                            results.map(user => (
-                                <Typography key={user.userId} variant="body1">
-                                    {user.name} {user.surname} - TCKN: {user.tckn}
-                                </Typography>
-                            ))
+                            <DataGrid
+                                rows={rows}
+                                columns={columns}
+                                pageSize={5}
+                                rowsPerPageOptions={[5]}
+                                checkboxSelection
+                            />
                         ) : (
                             <Typography>No results found</Typography>
                         )}

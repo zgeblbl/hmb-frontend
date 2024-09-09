@@ -88,8 +88,8 @@ export default function HomePage() {
         <div className="navbar-logo">
           <img src={logo} alt="Ministry Logo" />
           <h1>
-            <span>{language === 'en' ? 'Ministry of Treasury' : 'Hazine Bakanlığı'}</span>
-            <span>{language === 'en' ? 'and Finance' : 've Maliye'}</span>
+            <span>{language === 'en' ? 'Ministry of Treasury' : 'Hazine ve Maliye'}</span>
+            <span>{language === 'en' ? 'and Finance' : 'Bakanlığı'}</span>
           </h1>
         </div>
         <ul className="navbar-links">
