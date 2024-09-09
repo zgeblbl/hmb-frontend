@@ -93,7 +93,7 @@ export default function HomePage() {
           </h1>
         </div>
         <ul className="navbar-links">
-          <li onClick={() => navigate('/home')}>{language === 'en' ? 'Dashboard' : 'Gösterge Paneli'}</li>
+          <li onClick={() => navigate('/home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
           <li 
             onMouseEnter={handleServicesMenuOpen} 
             onClick={handleServicesMenuOpen}
