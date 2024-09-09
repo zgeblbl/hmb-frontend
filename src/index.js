@@ -8,6 +8,7 @@ import reportWebVitals from './reportWebVitals';
 import HomePage from './HomePage';
 import UserQuery from './UserQuery';
 import LeaveApplication from './LeaveApplication';
+import Contact from './Contact';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -19,6 +20,7 @@ root.render(
         <Route path="/home" element={<HomePage />} />  {/* Route for HomePage */}
         <Route path="/userquery" element={<UserQuery />} />
         <Route path="/leaveapplication" element={<LeaveApplication />} />
+        <Route path="/contact" element={<Contact />} />
       </Routes>
     </Router>
   </React.StrictMode>
