@@ -9,6 +9,7 @@ import HomePage from './HomePage';
 import UserQuery from './UserQuery';
 import LeaveApplication from './LeaveApplication';
 import Contact from './Contact';
+import ProfileSettings from './ProfileSettings';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +22,7 @@ root.render(
         <Route path="/userquery" element={<UserQuery />} />
         <Route path="/leaveapplication" element={<LeaveApplication />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/profile-settings" element={<ProfileSettings/>} />
       </Routes>
     </Router>
   </React.StrictMode>
