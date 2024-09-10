@@ -1,5 +1,12 @@
 .user-query {
-    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Sayfa yüksekliğini tüm ekran yüksekliğine yay */
+}
+
+/* İçeriği esnek yaparak footer'ı alta it */
+.content {
+    flex-grow: 1; /* İçeriğin ekranın kalanını kaplamasına izin ver */
 }
 
 .navbar {
@@ -92,4 +99,13 @@
     width: 100%;
     max-width: 400px;
     margin-top: 20px;
+}
+
+/* Footer her zaman sayfanın altında olsun */
+.footer {
+    background-color: #f1f1f1;
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    position: relative;
 }
