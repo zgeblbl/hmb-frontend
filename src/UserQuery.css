@@ -6,7 +6,7 @@
 
 /* İçeriği esnek yaparak footer'ı alta it */
 .content {
-    flex-grow: 1; /* İçeriğin ekranın kalanını kaplamasına izin ver */
+    flex-grow: 2; /* İçeriğin ekranın kalanını kaplamasına izin ver */
 }
 
 .navbar {
@@ -92,14 +92,20 @@
     align-items: center;
 }
 
+/* Formun genel paneli */
 .query-panel {
-    background-color: #f5f5f5;
-    padding: 20px;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 400px;
-    margin-top: 20px;
+    display: flex;
+    flex-wrap: wrap; /* Daha küçük ekranlarda alt alta gelmesi için */
+    gap: 10px; /* Form alanları arasına boşluk bırakır */
+    justify-content: space-between;
 }
+
+/* Her bir form alanının genişliğini kontrol edin */
+.query-panel .form-field {
+    flex: 1; /* Her form alanı eşit genişlikte olur */
+    min-width: 200px; /* En küçük genişlik ayarı */
+}
+
 
 /* Footer her zaman sayfanın altında olsun */
 .footer {

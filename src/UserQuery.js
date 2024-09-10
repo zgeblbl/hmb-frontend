@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './UserQuery.css'; // Bu CSS dosyasına yukarıdaki stilleri ekleyin
+import './UserQuery.css';
 import './HomePage';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
@@ -81,6 +81,17 @@ export default function UserQuery() {
     };
 
     const handleQuery = async () => {
+        // Tüm alanların boş olup olmadığını kontrol ediyoruz
+        if (!tckn && !firstName && !lastName) {
+            // Dil kontrolü yaparak uygun mesajı gösteriyoruz
+            if (language === 'en') {
+                alert('Please fill in at least one field.');
+            } else {
+                alert('Lütfen en az bir alanı doldurun.');
+            }
+            return; // Eğer tüm alanlar boşsa sorgulama yapılmayacak
+        }
+        
         const queryData = {
             TCKN: tckn || "",  
             firstName: firstName || "",
@@ -194,57 +205,66 @@ export default function UserQuery() {
             </Menu>
 
             <main className="content">
-                <Box className="query-panel" sx={{ padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px', width: '100%', maxWidth: '400px', marginTop: '20px' }}>
-                    <TextField
-                        label="TCKN"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        value={tckn}
-                        onChange={(e) => setTckn(e.target.value)}
-                    />
-                    <TextField
-                        label="İsim"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        value={firstName}
-                        onChange={(e) => setFirstName(e.target.value)}
-                    />
-                    <TextField
-                        label="Soyisim"
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        value={lastName}
-                        onChange={(e) => setLastName(e.target.value)}
-                    />
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        fullWidth
-                        sx={{ marginTop: '20px' }}
-                        onClick={handleQuery}
-                    >
-                        Sorgula
-                    </Button>
-                    {results !== null && (
-                        <Box sx={{ height: 400, width: '100%', marginTop: '20px' }}>
-                            {results.length > 0 ? (
-                                <DataGrid
-                                    rows={rows}
-                                    columns={columns}
-                                    pageSize={5}
-                                    rowsPerPageOptions={[5]}
-                                    checkboxSelection
-                                />
-                            ) : (
-                                <Typography>No results found</Typography>
-                            )}
-                        </Box>
-                    )}
-                </Box>
+                <Box className="query-panel" sx={{ padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px', width: '100%', marginTop: '20px' }}>
+                    <div className="form-field">
+                        <TextField
+                            label="TCKN"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={tckn}
+                            onChange={(e) => setTckn(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-field">
+                        <TextField
+                            label="İsim"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={firstName}
+                            onChange={(e) => setFirstName(e.target.value)}
+                        />
+                    </div>
+                    <div className="form-field">
+                        <TextField
+                            label="Soyisim"
+                            variant="outlined"
+                            fullWidth
+                            margin="normal"
+                            value={lastName}
+                            onChange={(e) => setLastName(e.target.value)}
+                        />
+                    </div>
+                    </Box>
+                        <Button
+                            variant="contained"
+                            color="primary"
+                            fullWidth
+                            sx={{ marginTop: '10px', padding: '6px' }} /* Butonun yukarı boşluğu ve padding'i azaltıldı */
+                            onClick={handleQuery}
+                        >
+                            Sorgula
+                        </Button>
+                        {results !== null && (
+                            <Box sx={{ height: 350, width: '50%', marginTop: '10px', backgroundColor: '#ffffff', borderRadius: '8px', }}> {/* Panelin boyutu daha da küçültüldü */}
+                                {results.length > 0 ? (
+                                   <DataGrid
+                                   rows={rows}
+                                   columns={columns}
+                                   pageSize={5} /* Sabit sayfa başına satır sayısı */
+                                   pagination={false} /* Pagination tamamen devre dışı */
+                                   rowsPerPageOptions={[]} /* Rows per page ayarlarını tamamen kaldırdık */
+                                   checkboxSelection
+                                   disableSelectionOnClick
+                               />
+                                ) : (
+                                    <Typography>No results found</Typography>
+                                )}
+                            </Box>
+                        )}
             </main>
+
             <footer className="footer">
                 <p>
                     {language === 'en' ? '© 2024 Ministry of Treasury and Finance. All rights reserved.' : '© 2024 Hazine ve Maliye Bakanlığı. Tüm hakları saklıdır.'}
