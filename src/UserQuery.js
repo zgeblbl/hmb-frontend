@@ -91,7 +91,7 @@ export default function UserQuery() {
             }
             return; // Eğer tüm alanlar boşsa sorgulama yapılmayacak
         }
-        
+
         const queryData = {
             TCKN: tckn || "",  
             firstName: firstName || "",
@@ -241,10 +241,10 @@ export default function UserQuery() {
                             variant="contained"
                             color="primary"
                             fullWidth
-                            sx={{ marginTop: '10px', padding: '6px' }} /* Butonun yukarı boşluğu ve padding'i azaltıldı */
+                            sx={{ marginTop: '10px', padding: '6px' }}
                             onClick={handleQuery}
                         >
-                            Sorgula
+                            {language === 'en' ? 'Search' : 'Sorgula'}
                         </Button>
                         {results !== null && (
                             <Box sx={{ height: 350, width: '50%', marginTop: '10px', backgroundColor: '#ffffff', borderRadius: '8px', }}> {/* Panelin boyutu daha da küçültüldü */}
