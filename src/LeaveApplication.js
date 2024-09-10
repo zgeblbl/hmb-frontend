@@ -26,6 +26,8 @@ export default function LeaveApplication() {
     const [submissionStatus, setSubmissionStatus] = useState('');
     // UserName menüsü için state
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+    const [errorMessage, setErrorMessage] = useState('');
+
 
     // Profil menüsünü açma/kapama
     const handleProfileMenuOpen = (event) => {
@@ -64,13 +66,26 @@ export default function LeaveApplication() {
     };
 
     const handleSubmit = async () => {
-        // Handle leave application submission
+        const start = new Date(startDate);
+        const end = new Date(endDate);
+        const calculatedDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+
+        // Validate the date range
+        if (end <= start) {
+            setErrorMessage(language === 'en' ? 'End date has to be after start date.' : 'Bitiş tarihi başlangıç tarihinden sonra olmalıdır.');
+            return;
+        } if (parseInt(leaveDays) !== calculatedDays) {
+            setErrorMessage(language === 'en' ? 'Number of leave days does not match the duration between start and end dates.' : 'İzin gün sayısı başlangıç ve bitiş tarihleri arasındaki süre ile uyuşmuyor.');
+            return;
+        }
+
+        setErrorMessage('');
         const leaveData = {
             startDate,
             endDate,
-            isPermissionApproved: false, // Default to false, or set based on your logic
-            approvalDate: '', // Empty initially, set if needed
-            isPermissionDeleted: false, // Default to false
+            isPermissionApproved: false,
+            approvalDate: '',
+            isPermissionDeleted: false,
             user: {
                 userId: 1 // Or get the actual userId dynamically
             },
@@ -175,7 +190,7 @@ export default function LeaveApplication() {
                 <MenuItem onClick={handleLogout}>
                 {language === 'en' ? 'Logout' : 'Çıkış Yap'}
                 </MenuItem>
-            </Menu>
+            </Menu>
             <main className="content">
                 <Box className="application-panel">
                     <TextField
@@ -223,7 +238,8 @@ export default function LeaveApplication() {
                             ))}
                         </Select>
                     </FormControl>
-                    
+                    {errorMessage && <div className="error-message">{errorMessage}</div>}
+
                     <Button
                         variant="contained"
                         color="primary"
