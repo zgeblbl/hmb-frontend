@@ -7,18 +7,46 @@ import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import FormControl from '@mui/material/FormControl';
 
 export default function LeaveApplication() {
     const navigate = useNavigate();
     const location = useLocation();
     const [anchorEl, setAnchorEl] = useState(null);
     const [leaveDays, setLeaveDays] = useState('');
-    const [reason, setReason] = useState('');
+    const [reason] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
+    const [leaveType, setLeaveType] = useState('');
     const [language, setLanguage] = useState('en'); // Default language
     const [userName, setUserName] = useState('');
     const [initials, setInitials] = useState('');
+    const [submissionStatus, setSubmissionStatus] = useState('');
+    // UserName menüsü için state
+    const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+
+    // Profil menüsünü açma/kapama
+    const handleProfileMenuOpen = (event) => {
+    setProfileAnchorEl(event.currentTarget);
+    };
+
+    const handleProfileMenuClose = () => {
+    setProfileAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+    console.log('Logged out');
+    navigate('/');
+    };
+
+    const leaveTypes = [
+        { value: 'ANNUAL', label: language === 'en' ? 'Annual Leave' : 'Yıllık İzin' },
+        { value: 'SICK', label: language === 'en' ? 'Sick Leave' : 'Hastalık İzni' },
+        { value: 'MATERNITY', label: language === 'en' ? 'Maternity Leave' : 'Doğum İzni' },
+        { value: 'EXCUSE_LEAVE', label: language === 'en' ? 'Excuse Leave' : 'Mazeret İzni' }
+    ];
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -35,8 +63,38 @@ export default function LeaveApplication() {
         }
     };
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
         // Handle leave application submission
+        const leaveData = {
+            startDate,
+            endDate,
+            isPermissionApproved: false, // Default to false, or set based on your logic
+            approvalDate: '', // Empty initially, set if needed
+            isPermissionDeleted: false, // Default to false
+            user: {
+                userId: 1 // Or get the actual userId dynamically
+            },
+            permissionType: leaveType
+        };
+    
+        try {
+            const response = await fetch('http://localhost:9090/api/hmb/permissions/addPermission', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(leaveData),
+            });
+    
+            if (response.ok) {
+                setSubmissionStatus(language === 'en' ? 'Application submitted successfully!' : 'Başvuru başarıyla gönderildi!');
+            } else {
+                setSubmissionStatus(language === 'en' ? 'Failed to submit application.' : 'Başvuru gönderilemedi.');
+            }
+        } catch (error) {
+            console.error('Error submitting leave application:', error);
+            setSubmissionStatus(language === 'en' ? 'Error occurred during submission.' : 'Başvuru sırasında hata oluştu.');
+        }
     };
 
     const handleLanguageChange = (lang) => {
@@ -70,7 +128,13 @@ export default function LeaveApplication() {
                 </ul>
                 <div className="navbar-profile">
                     <div className="profile-initials">{initials}</div>
-                    <span>{userName}</span>
+                    <li 
+                        onMouseEnter={handleProfileMenuOpen} 
+                        onClick={handleProfileMenuOpen}
+                        style={{ cursor: 'pointer', listStyleType: 'none' }}
+                    >
+                        {userName}
+                    </li>
                 </div>
             </nav>
             <Menu
@@ -88,6 +152,30 @@ export default function LeaveApplication() {
                     {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
                 </MenuItem>
             </Menu>
+            {/* Profile menu */}
+            <Menu
+                anchorEl={profileAnchorEl}
+                open={Boolean(profileAnchorEl)}
+                onClose={handleProfileMenuClose}
+                MenuListProps={{
+                onMouseLeave: handleProfileMenuClose,
+                }}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+                }}
+            >
+                <MenuItem onClick={() => navigate('/profile-settings')}>
+                {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                {language === 'en' ? 'Logout' : 'Çıkış Yap'}
+                </MenuItem>
+            </Menu>
             <main className="content">
                 <Box className="application-panel">
                     <TextField
@@ -122,16 +210,20 @@ export default function LeaveApplication() {
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
                     />
-                    <TextField
-                        label={language === 'en' ? 'Reason for Leave' : 'İzin Nedeni'}
-                        variant="outlined"
-                        fullWidth
-                        margin="normal"
-                        multiline
-                        rows={4}
-                        value={reason}
-                        onChange={(e) => setReason(e.target.value)}
-                    />
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel>{language === 'en' ? 'Leave Type' : 'İzin Türü'}</InputLabel>
+                        <Select
+                            value={leaveType}
+                            onChange={(e) => setLeaveType(e.target.value)}
+                        >
+                            {leaveTypes.map((type) => (
+                                <MenuItem key={type.value} value={type.value}>
+                                    {type.label}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+                    
                     <Button
                         variant="contained"
                         color="primary"
