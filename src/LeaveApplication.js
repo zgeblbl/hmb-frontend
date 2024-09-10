@@ -27,6 +27,7 @@ export default function LeaveApplication() {
     // UserName menüsü için state
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
+    const [userId, setUserId] = useState(null);
 
 
     // Profil menüsünü açma/kapama
@@ -65,29 +66,40 @@ export default function LeaveApplication() {
         }
     };
 
+    const handleLanguageChange = (lang) => {
+        setLanguage(lang);
+    };
+
+    useEffect(() => {
+        // Example of setting initial values from localStorage or other sources
+        const storedUserName = localStorage.getItem('userName') || 'John Doe';
+        const storedUserId = localStorage.getItem('userId');
+        console.log('Stored User ID:', storedUserId);
+        const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
+        setUserName(storedUserName);
+        setInitials(userInitials);
+        setUserId(storedUserId);
+    }, []);
+
     const handleSubmit = async () => {
         const start = new Date(startDate);
         const end = new Date(endDate);
-        const calculatedDays = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
 
         // Validate the date range
         if (end <= start) {
             setErrorMessage(language === 'en' ? 'End date has to be after start date.' : 'Bitiş tarihi başlangıç tarihinden sonra olmalıdır.');
             return;
-        } if (parseInt(leaveDays) !== calculatedDays) {
-            setErrorMessage(language === 'en' ? 'Number of leave days does not match the duration between start and end dates.' : 'İzin gün sayısı başlangıç ve bitiş tarihleri arasındaki süre ile uyuşmuyor.');
-            return;
+        } else {
+            setErrorMessage(''); // Clear error message if dates are valid
         }
-
-        setErrorMessage('');
         const leaveData = {
             startDate,
             endDate,
-            isPermissionApproved: false,
-            approvalDate: '',
-            isPermissionDeleted: false,
+            isPermissionApproved: false, // Default to false, or set based on your logic
+            approvalDate: '', // Empty initially, set if needed
+            isPermissionDeleted: false, // Default to false
             user: {
-                userId: 1 // Or get the actual userId dynamically
+                userId: userId // Or get the actual userId dynamically
             },
             permissionType: leaveType
         };
@@ -111,18 +123,6 @@ export default function LeaveApplication() {
             setSubmissionStatus(language === 'en' ? 'Error occurred during submission.' : 'Başvuru sırasında hata oluştu.');
         }
     };
-
-    const handleLanguageChange = (lang) => {
-        setLanguage(lang);
-    };
-
-    useEffect(() => {
-        // Example of setting initial values from localStorage or other sources
-        const storedUserName = localStorage.getItem('userName') || 'John Doe';
-        const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
-        setUserName(storedUserName);
-        setInitials(userInitials);
-    }, []);
 
     return (
         <div className="leave-application">
@@ -239,7 +239,6 @@ export default function LeaveApplication() {
                         </Select>
                     </FormControl>
                     {errorMessage && <div className="error-message">{errorMessage}</div>}
-
                     <Button
                         variant="contained"
                         color="primary"

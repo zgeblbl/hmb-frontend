@@ -31,8 +31,14 @@ function SignIn() {
 
       if (response.ok) {
         const result = await response.json();  // JSON formatında veri alıyoruz
-        const { firstName, lastName } = result;
+        
+        const { firstName, lastName, userId } = result;
+        console.log('API Response:', result);
         localStorage.setItem('userName', `${firstName} ${lastName}`);
+        //localStorage.setItem('userId', '12345');
+        localStorage.setItem('userId', userId);
+        console.log('Stored User ID in signin:', userId);
+        
         navigate('/home');
         
       } else {
