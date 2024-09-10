@@ -142,3 +142,9 @@
     color: red;
     margin-bottom: 10px;
 }
+.submission-status {
+    margin-top: 20px;
+    padding: 10px;
+    color: green;
+    font-weight: bold;
+}

@@ -115,6 +115,12 @@ export default function LeaveApplication() {
     
             if (response.ok) {
                 setSubmissionStatus(language === 'en' ? 'Application submitted successfully!' : 'Başvuru başarıyla gönderildi!');
+            
+                // Clear out all the fields
+                setLeaveDays('');
+                setStartDate('');
+                setEndDate('');
+                setLeaveType('');
             } else {
                 setSubmissionStatus(language === 'en' ? 'Failed to submit application.' : 'Başvuru gönderilemedi.');
             }
@@ -248,6 +254,11 @@ export default function LeaveApplication() {
                     >
                         {language === 'en' ? 'SUBMIT APPLICATION' : 'Başvuruyu Gönder'}
                     </Button>
+                    {submissionStatus && (
+                        <div className="submission-status">
+                            {submissionStatus}
+                        </div>
+                    )}
                 </Box>
             </main>
             <footer className="footer">
