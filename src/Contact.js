@@ -18,6 +18,9 @@ export default function Contact() {
     const [userName, setUserName] = useState('');
     const [initials, setInitials] = useState('');
 
+    // UserName menüsü için state
+    const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
     };
@@ -33,9 +36,47 @@ export default function Contact() {
         }
     };
 
-    const handleSubmit = () => {
-        // Handle contact form submission
-        console.log('Form submitted with:', { name, email, message });
+    // Profil menüsünü açma/kapama
+    const handleProfileMenuOpen = (event) => {
+        setProfileAnchorEl(event.currentTarget);
+    };
+
+    const handleProfileMenuClose = () => {
+        setProfileAnchorEl(null);
+    };
+    
+    const handleLogout = () => {
+        console.log('Logged out');
+        navigate('/');
+    };
+
+
+    const handleSubmit = async () => {
+        try {
+            const response = await fetch('http://localhost:9090/api/messages', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name: name,            // İsim alanı
+                    email: email,          // E-posta alanı
+                    messageContent: message  // Mesaj alanı: Backend'de "messageContent" ile eşleşmeli
+                }),
+            });
+
+            if (response.ok) {
+                alert(language === 'en' ? 'Message sent successfully!' : 'Mesaj başarıyla gönderildi!');
+                setName('');
+                setEmail('');
+                setMessage('');
+            } else {
+                alert(language === 'en' ? 'Failed to send message.' : 'Mesaj gönderme başarısız oldu.');
+            }
+        } catch (error) {
+            console.error('Error submitting the form:', error);
+            alert(language === 'en' ? 'An error occurred while sending the message.' : 'Mesaj gönderilirken bir hata oluştu.');
+        }
     };
 
     const handleLanguageChange = (lang) => {
@@ -69,7 +110,13 @@ export default function Contact() {
                 </ul>
                 <div className="navbar-profile">
                     <div className="profile-initials">{initials}</div>
-                    <span>{userName}</span>
+                    <li 
+                        onMouseEnter={handleProfileMenuOpen} 
+                        onClick={handleProfileMenuOpen}
+                        style={{ cursor: 'pointer', listStyleType: 'none' }}
+                    >
+                        {userName}
+                    </li>
                 </div>
             </nav>
             <Menu
@@ -87,6 +134,32 @@ export default function Contact() {
                     {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
                 </MenuItem>
             </Menu>
+
+            {/* Profile menu */}
+            <Menu
+                anchorEl={profileAnchorEl}
+                open={Boolean(profileAnchorEl)}
+                onClose={handleProfileMenuClose}
+                MenuListProps={{
+                onMouseLeave: handleProfileMenuClose,
+                }}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+                }}
+            >
+                <MenuItem onClick={() => navigate('/profile-settings')}>
+                {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                {language === 'en' ? 'Logout' : 'Çıkış Yap'}
+                </MenuItem>
+            </Menu>
+
             <main className="content">
                 <div className="contact-form-panel">
                     <h2>{language === 'en' ? 'Contact Us' : 'Bize Ulaşın'}</h2>

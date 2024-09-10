@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import './UserQuery.css';
+import './UserQuery.css'; // Bu CSS dosyasına yukarıdaki stilleri ekleyin
 import './HomePage';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
@@ -14,6 +14,8 @@ import Typography from '@mui/material/Typography';
 export default function UserQuery() {
     const navigate = useNavigate();
     const location = useLocation();
+
+    const [language, setLanguage] = useState('en'); // Default language
     
     // Kullanıcı adı ve baş harflerini tutmak için state oluşturuyoruz
     const [userName, setUserName] = useState('');
@@ -22,9 +24,24 @@ export default function UserQuery() {
     const [tckn, setTckn] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [results, setResults] = useState([]);
+    const [results, setResults] = useState(null); // Sonuçları saklamak için state'i başta null olarak ayarladık
 
+    // UserName menüsü için state
+    const [profileAnchorEl, setProfileAnchorEl] = useState(null);
 
+     // Profil menüsünü açma/kapama
+    const handleProfileMenuOpen = (event) => {
+        setProfileAnchorEl(event.currentTarget);
+    };
+
+    const handleProfileMenuClose = () => {
+        setProfileAnchorEl(null);
+    };
+    
+    const handleLogout = () => {
+        console.log('Logged out');
+        navigate('/');
+    };
 
     useEffect(() => {
         // localStorage'dan kullanıcı adını alıyoruz
@@ -35,7 +52,6 @@ export default function UserQuery() {
         const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setInitials(userInitials);
     }, []);
-
 
     const handleNavigation = (path) => {
         if (location.pathname !== path) {
@@ -60,6 +76,9 @@ export default function UserQuery() {
         }
     };
 
+    const handleLanguageChange = (lang) => {
+        setLanguage(lang);
+    };
 
     const handleQuery = async () => {
         const queryData = {
@@ -79,7 +98,7 @@ export default function UserQuery() {
     
             if (response.ok) {
                 const data = await response.json();
-                setResults(data);
+                setResults(data.length > 0 ? data : []); // Sonuçları güncelleme
             } else if (response.status === 404) {
                 setResults([]); // No results found
             } else {
@@ -98,12 +117,12 @@ export default function UserQuery() {
     ];
 
     // Gelen veriyi tablo için hazırlıyoruz
-    const rows = results.map((user, index) => ({
+    const rows = results ? results.map((user, index) => ({
         id: index + 1, // Her kullanıcıya unique bir ID veriyoruz, backend'den gelen id varsa kullan
         firstName: user.firstName,
         lastName: user.lastName,
         TCKN: user.TCKN
-    }));
+    })) : [];
 
     return (
         <div className="user-query">
@@ -111,24 +130,27 @@ export default function UserQuery() {
                 <div className="navbar-logo">
                     <img src={logo} alt="Ministry Logo" />
                     <h1>
-                        <span>Ministry of Treasury</span>
-                        <span>and Finance</span>
+                        <span>{language === 'en' ? 'Ministry of Treasury' : 'Hazine ve Maliye'}</span>
+                        <span>{language === 'en' ? 'and Finance' : 'Bakanlığı'}</span>
                     </h1>
                 </div>
                 <ul className="navbar-links">
-                    <li onClick={() => handleNavigation('/home')}>Dashboard</li>
-                    <li 
-                        onMouseEnter={handleMenuOpen} 
-                        onClick={handleMenuOpen}
-                    >
-                        Services
+                    <li onClick={() => handleSubPageNavigation('/home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
+                    <li onMouseEnter={handleMenuOpen} onClick={handleMenuOpen}>
+                        {language === 'en' ? 'Services' : 'Hizmetler'}
                     </li>
-                    <li onClick={() => handleNavigation('/contact')}>Contact</li>
+                    <li onClick={() => handleSubPageNavigation('/contact')}>{language === 'en' ? 'Contact' : 'İletişim'}</li>
                 </ul>
                 <div className="navbar-profile">
                     <div className="profile-initials">{initials}</div>
-                    <span>{userName}</span>
-                </div>
+                        <li 
+                            onMouseEnter={handleProfileMenuOpen} 
+                            onClick={handleProfileMenuOpen}
+                            style={{ cursor: 'pointer', listStyleType: 'none' }}
+                        >
+                            {userName}
+                        </li>
+                    </div>
             </nav>
             <Menu
                 anchorEl={anchorEl}
@@ -139,12 +161,38 @@ export default function UserQuery() {
                 }}
             >
                 <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
-                    İzin Başvurusu
+                    {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
                 </MenuItem>
                 <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
-                    Kullanıcı Sorgulama
+                    {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
                 </MenuItem>
             </Menu>
+
+            {/* Profile menu */}
+            <Menu
+                anchorEl={profileAnchorEl}
+                open={Boolean(profileAnchorEl)}
+                onClose={handleProfileMenuClose}
+                MenuListProps={{
+                onMouseLeave: handleProfileMenuClose,
+                }}
+                anchorOrigin={{
+                vertical: 'bottom',
+                horizontal: 'right',
+                }}
+                transformOrigin={{
+                vertical: 'top',
+                horizontal: 'right',
+                }}
+            >
+                <MenuItem onClick={() => navigate('/profile-settings')}>
+                {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
+                </MenuItem>
+                <MenuItem onClick={handleLogout}>
+                {language === 'en' ? 'Logout' : 'Çıkış Yap'}
+                </MenuItem>
+            </Menu>
+
             <main className="content">
                 <Box className="query-panel" sx={{ padding: '20px', backgroundColor: '#f5f5f5', borderRadius: '8px', width: '100%', maxWidth: '400px', marginTop: '20px' }}>
                     <TextField
@@ -180,21 +228,32 @@ export default function UserQuery() {
                     >
                         Sorgula
                     </Button>
-                    <Box sx={{ height: 400, width: '100%', marginTop: '20px' }}>
-                        {results.length > 0 ? (
-                            <DataGrid
-                                rows={rows}
-                                columns={columns}
-                                pageSize={5}
-                                rowsPerPageOptions={[5]}
-                                checkboxSelection
-                            />
-                        ) : (
-                            <Typography>No results found</Typography>
-                        )}
-                    </Box>
+                    {results !== null && (
+                        <Box sx={{ height: 400, width: '100%', marginTop: '20px' }}>
+                            {results.length > 0 ? (
+                                <DataGrid
+                                    rows={rows}
+                                    columns={columns}
+                                    pageSize={5}
+                                    rowsPerPageOptions={[5]}
+                                    checkboxSelection
+                                />
+                            ) : (
+                                <Typography>No results found</Typography>
+                            )}
+                        </Box>
+                    )}
                 </Box>
             </main>
+            <footer className="footer">
+                <p>
+                    {language === 'en' ? '© 2024 Ministry of Treasury and Finance. All rights reserved.' : '© 2024 Hazine ve Maliye Bakanlığı. Tüm hakları saklıdır.'}
+                </p>
+                <div className="language-buttons">
+                    <button onClick={() => handleLanguageChange('en')}>English</button>
+                    <button onClick={() => handleLanguageChange('tr')}>Türkçe</button>
+                </div>
+            </footer>
         </div>
     );
 }
