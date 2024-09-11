@@ -74,7 +74,6 @@ export default function LeaveApplication() {
         // Example of setting initial values from localStorage or other sources
         const storedUserName = localStorage.getItem('userName') || 'John Doe';
         const storedUserId = localStorage.getItem('userId');
-        console.log('Stored User ID:', storedUserId);
         const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setUserName(storedUserName);
         setInitials(userInitials);
@@ -84,10 +83,14 @@ export default function LeaveApplication() {
     const handleSubmit = async () => {
         const start = new Date(startDate);
         const end = new Date(endDate);
+        const durationInDays = (end - start) / (1000 * 60 * 60 * 24);
 
         // Validate the date range
         if (end <= start) {
             setErrorMessage(language === 'en' ? 'End date has to be after start date.' : 'Bitiş tarihi başlangıç tarihinden sonra olmalıdır.');
+            return;
+        } else if (parseInt(leaveDays) !== durationInDays + 1) { // Adding 1 because both start and end dates are inclusive
+            setErrorMessage(language === 'en' ? 'Duration does not match the number of leave days.' : 'Süre izin gün sayısıyla uyuşmuyor.');
             return;
         } else {
             setErrorMessage(''); // Clear error message if dates are valid
