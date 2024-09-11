@@ -32,14 +32,21 @@ function SignIn() {
       if (response.ok) {
         const result = await response.json();  // JSON formatında veri alıyoruz
         
-        const { firstName, lastName, userId } = result;
+        const { firstName, lastName, userId, titleId} = result;
         console.log('API Response:', result);
         localStorage.setItem('userName', `${firstName} ${lastName}`);
-        //localStorage.setItem('userId', '12345');
         localStorage.setItem('userId', userId);
+        localStorage.setItem('titleId', titleId);  // title_id'yi kaydediyoruz
+
         console.log('Stored User ID in signin:', userId);
         
-        navigate('/home');
+       // Admin title_id'lerini kontrol et
+      const adminTitleIds = [1, 2, 3, 7];  // Admin title_id değerleri
+      if (adminTitleIds.includes(titleId)) {
+        navigate('/admin-home');  // Admin için farklı bir sayfaya yönlendir
+      } else {
+        navigate('/home');  // Normal kullanıcı için yönlendirme
+      }
         
       } else {
         const errorText = await response.text();

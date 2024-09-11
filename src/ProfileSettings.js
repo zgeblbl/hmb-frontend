@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './ProfileSettings.css';
 import './HomePage';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 import logo from './logo.svg';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
@@ -12,7 +12,6 @@ import Typography from '@mui/material/Typography';
 
 export default function ProfileSettings() {
     const navigate = useNavigate();
-    const location = useLocation();
 
     const [language, setLanguage] = useState('en'); // Default language
     const [userName, setUserName] = useState('');
