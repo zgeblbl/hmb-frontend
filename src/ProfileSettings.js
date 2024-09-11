@@ -66,6 +66,10 @@ export default function ProfileSettings() {
             alert(language === 'en' ? 'Passwords do not match' : 'Şifreler uyuşmuyor');
             return;
         }
+        if (currentPassword === newPassword) {
+            alert(language === 'en' ? 'Enter a password that is different from your current one' : 'Mevcut şifrenizden farklı bir şifre giriniz');
+            return;
+        }
     
         try {
             // Backend'e şifre değiştirme isteği gönderiyoruz

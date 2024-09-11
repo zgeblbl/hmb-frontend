@@ -122,11 +122,11 @@ export default function LeaveApplication() {
                 setEndDate('');
                 setLeaveType('');
             } else {
-                setSubmissionStatus(language === 'en' ? 'Failed to submit application.' : 'Başvuru gönderilemedi.');
+                setErrorMessage(language === 'en' ? 'Failed to submit application.' : 'Başvuru gönderilemedi.');
             }
         } catch (error) {
             console.error('Error submitting leave application:', error);
-            setSubmissionStatus(language === 'en' ? 'Error occurred during submission.' : 'Başvuru sırasında hata oluştu.');
+            setErrorMessage(language === 'en' ? 'Error occurred during submission.' : 'Başvuru sırasında hata oluştu.');
         }
     };
 
