@@ -141,7 +141,7 @@ export default function AdminHome() {
     
             {/* Eğer title_id 7 ise "Kullanıcı Ekle" menüsü gösterilecek */}
             {titleId === 7 && (
-              <MenuItem onClick={() => navigate('/adduser')}>
+              <MenuItem onClick={() => navigate('/add-user')}>
                 {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
               </MenuItem>
             )}

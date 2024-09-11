@@ -16,7 +16,6 @@ export default function LeaveApplication() {
     const location = useLocation();
     const [anchorEl, setAnchorEl] = useState(null);
     const [leaveDays, setLeaveDays] = useState('');
-    const [reason] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [leaveType, setLeaveType] = useState('');
