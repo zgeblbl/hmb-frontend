@@ -11,6 +11,7 @@ import LeaveApplication from './LeaveApplication';
 import Contact from './Contact';
 import ProfileSettings from './ProfileSettings';
 import AdminHome from './AdminHome';
+import AddUser from './AddUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -25,6 +26,7 @@ root.render(
         <Route path="/contact" element={<Contact />} />
         <Route path="/profile-settings" element={<ProfileSettings/>} />
         <Route path="/admin-home" element={<AdminHome/>} />
+        <Route path="/add-user" element={<AddUser/>} />
       </Routes>
     </Router>
   </React.StrictMode>
