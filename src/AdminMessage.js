@@ -196,12 +196,17 @@ function AdminMessage() {
   const styles = {
     container: {
       padding: '20px',
+      display: 'flex',
+      justifyContent: 'center', // Container içeriğini ortalayacak
     },
     panel: {
       backgroundColor: 'white',
       padding: '20px',
       borderRadius: '10px',
       boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)',
+      width: '60%', // Panelin genişliğini %60 olarak ayarladık
+      maxWidth: '800px', // Maksimum genişlik ayarı (örneğin 800px)
+      minWidth: '300px', // Minimum genişlik ayarı
     },
     messageBox: {
       marginBottom: '20px',
