@@ -132,7 +132,7 @@ export default function AdminSettings() {
                     onMouseLeave: handleMenuClose,
                 }}
             >
-               <MenuItem onClick={() => navigate('/adduser')}>
+               <MenuItem onClick={() => navigate('/add-user')}>
                     {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
                 </MenuItem>
                 <MenuItem onClick={() => navigate('/admin-query')}>

@@ -163,11 +163,11 @@ export default function AdminQuery() {
                     onMouseLeave: handleMenuClose,
                 }}
             >
+                <MenuItem onClick={() => navigate('/add-user')}>
+                    {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
+                </MenuItem>
                 <MenuItem onClick={() => handleSubPageNavigation('/admin-query')}>
                     {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
-                </MenuItem>
-                <MenuItem onClick={() => navigate('/adduser')}>
-                    {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
                 </MenuItem>
             </Menu>
 
