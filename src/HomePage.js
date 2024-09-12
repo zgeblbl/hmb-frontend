@@ -19,6 +19,31 @@ export default function HomePage() {
   // UserName menüsü için state
   const [profileAnchorEl, setProfileAnchorEl] = useState(null);
 
+  const [userName, setUserName] = useState('');
+  const [initials, setInitials] = useState('');
+  const [titleId, setTitleId] = useState(null);  // titleId için state tanımlıyoruz
+  const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    // localStorage'dan kullanıcı ID'sini alıyoruz
+    const storedUserId = localStorage.getItem('userId');
+    if (storedUserId) {
+        setUserId(storedUserId);
+    }
+
+    // titleId'yi localStorage'dan alıyoruz
+    const storedTitleId = localStorage.getItem('titleId');
+    if (storedTitleId) {
+        setTitleId(parseInt(storedTitleId, 10));  // titleId'yi integer olarak kaydediyoruz
+    }
+
+    // Diğer işlemler
+    const storedUserName = localStorage.getItem('userName') || 'John Doe';
+    setUserName(storedUserName);
+    const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
+    setInitials(userInitials);
+  }, []);
+
   // Services menüsünü açma/kapama
   const handleServicesMenuOpen = (event) => {
     setServicesAnchorEl(event.currentTarget);
@@ -41,17 +66,6 @@ export default function HomePage() {
     console.log('Logged out');
     navigate('/');
   };
-
-  const [userName, setUserName] = useState('');
-  const [initials, setInitials] = useState('');
-
-  useEffect(() => {
-    const storedUserName = localStorage.getItem('userName') || 'John Doe';
-    setUserName(storedUserName);
-
-    const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
-    setInitials(userInitials);
-  }, []);
 
   // Function to handle language change
   const handleLanguageChange = (lang) => {
@@ -94,6 +108,7 @@ export default function HomePage() {
         </div>
         <ul className="navbar-links">
           <li onClick={() => navigate('/home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
+          {/* Services menüsü sadece belirli titleId'ler için gösterilecek */}
           <li 
             onMouseEnter={handleServicesMenuOpen} 
             onClick={handleServicesMenuOpen}
@@ -122,21 +137,28 @@ export default function HomePage() {
         MenuListProps={{
           onMouseLeave: handleServicesMenuClose,
         }}
-        anchorOrigin={{
-          vertical: 'bottom',
-          horizontal: 'right',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'right',
-        }}
       >
-        <MenuItem onClick={() => navigate('/leaveapplication')}>
-          {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
-        </MenuItem>
-        <MenuItem onClick={() => navigate('/userquery')}>
-          {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
-        </MenuItem>
+        {/* titleId 1, 2, 3 için Leave Application, User Query ve İzin Başvuruları seçeneklerini gösteriyoruz */}
+        {[1, 2, 3].includes(titleId) && (
+          <>
+            <MenuItem onClick={() => navigate('/leaveapplication')}>
+              {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
+            </MenuItem>
+            <MenuItem onClick={() => navigate('/userquery')}>
+              {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
+            </MenuItem>
+            <MenuItem onClick={() => navigate('/leave-approvals')}>
+              {language === 'en' ? 'Leave Approvals' : 'İzin Başvuruları'}
+            </MenuItem>
+          </>
+        )}
+
+        {/* titleId 4, 5, 6 için sadece Leave Application seçeneğini gösteriyoruz */}
+        {[4, 5, 6].includes(titleId) && (
+          <MenuItem onClick={() => navigate('/leaveapplication')}>
+            {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
+          </MenuItem>
+        )}
       </Menu>
 
       {/* Profile menu */}
@@ -210,7 +232,7 @@ export default function HomePage() {
             <button onClick={() => handleLanguageChange('tr')}>Türkçe</button>
         </div>
         <p>© 2024 {language === 'en' ? 'Ministry of Treasury and Finance All rights reserved.' : 'Hazine ve Maliye Bakanlığı Tüm hakları saklıdır.'}</p>
-    </footer>
+      </footer>
     </div>
   );
 }

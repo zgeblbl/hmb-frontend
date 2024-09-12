@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-export default function ProfileSettings() {
+export default function AdminSettings() {
     const navigate = useNavigate();
 
     const [language, setLanguage] = useState('en'); // Default language
@@ -19,7 +19,6 @@ export default function ProfileSettings() {
     const [anchorEl, setAnchorEl] = useState(null);
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
     const [userId, setUserId] = useState(null);  // userId ve setUserId tanımlıyoruz
-    const [titleId, setTitleId] = useState(null);  // titleId için state tanımlıyoruz
 
     const [currentPassword, setCurrentPassword] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -38,12 +37,6 @@ export default function ProfileSettings() {
         const storedUserId = localStorage.getItem('userId');
         if (storedUserId) {
             setUserId(storedUserId);
-        }
-
-        // titleId'yi localStorage'dan alıyoruz
-        const storedTitleId = localStorage.getItem('titleId');
-        if (storedTitleId) {
-            setTitleId(parseInt(storedTitleId, 10));  // titleId'yi integer olarak kaydediyoruz
         }
     
         // Diğer işlemler
@@ -67,6 +60,7 @@ export default function ProfileSettings() {
     };
 
     const handleChangePassword = async () => {
+        // Yeni şifrelerin eşleşip eşleşmediğini kontrol ediyoruz
         if (newPassword !== confirmPassword) {
             alert(language === 'en' ? 'Passwords do not match' : 'Şifreler uyuşmuyor');
             return;
@@ -75,8 +69,9 @@ export default function ProfileSettings() {
             alert(language === 'en' ? 'Enter a password that is different from your current one' : 'Mevcut şifrenizden farklı bir şifre giriniz');
             return;
         }
-
+    
         try {
+            // Backend'e şifre değiştirme isteği gönderiyoruz
             const response = await fetch(`http://localhost:9090/api/hmb/users/changePassword/${userId}`, {
                 method: 'PUT',
                 headers: {
@@ -87,12 +82,13 @@ export default function ProfileSettings() {
                     newPassword: newPassword
                 }),
             });
-
+    
             if (response.ok) {
                 alert(language === 'en' ? 'Password changed successfully' : 'Şifre başarıyla değiştirildi');
+                // İsteğin başarılı olması durumunda yapılacaklar
             } else {
                 const errorMessage = await response.text();
-                alert(errorMessage);
+                alert(errorMessage);  // Hata mesajını gösteriyoruz
             }
         } catch (error) {
             console.error('Error during password change:', error);
@@ -111,11 +107,11 @@ export default function ProfileSettings() {
                     </h1>
                 </div>
                 <ul className="navbar-links">
-                    <li onClick={() => navigate('/home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
+                    <li onClick={() => navigate('/admin-home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
                     <li onMouseEnter={handleMenuOpen} onClick={handleMenuOpen}>
                         {language === 'en' ? 'Services' : 'Hizmetler'}
                     </li>
-                    <li onClick={() => navigate('/contact')}>{language === 'en' ? 'Contact' : 'İletişim'}</li>
+                    <li onClick={() => navigate('/admin-message')}>{language === 'en' ? 'Messages' : 'Mesajlar'}</li>
                 </ul>
                 <div className="navbar-profile">
                     <div className="profile-initials">{initials}</div>
@@ -128,7 +124,6 @@ export default function ProfileSettings() {
                     </li>
                 </div>
             </nav>
-
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
@@ -137,27 +132,12 @@ export default function ProfileSettings() {
                     onMouseLeave: handleMenuClose,
                 }}
             >
-                {/* titleId 1, 2, 3 için Leave Application, User Query ve İzin Başvuruları seçeneklerini gösteriyoruz */}
-                {[1, 2, 3].includes(titleId) && (
-                    <>
-                        <MenuItem onClick={() => navigate('/leaveapplication')}>
-                            {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
-                        </MenuItem>
-                        <MenuItem onClick={() => navigate('/userquery')}>
-                            {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
-                        </MenuItem>
-                        <MenuItem onClick={() => navigate('/leave-approvals')}>
-                            {language === 'en' ? 'Leave Approvals' : 'İzin Başvuruları'}
-                        </MenuItem>
-                    </>
-                )}
-
-                {/* titleId 4, 5, 6 için sadece Leave Application seçeneğini gösteriyoruz */}
-                {[4, 5, 6].includes(titleId) && (
-                    <MenuItem onClick={() => navigate('/leaveapplication')}>
-                        {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
-                    </MenuItem>
-                )}
+               <MenuItem onClick={() => navigate('/adduser')}>
+                    {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
+                </MenuItem>
+                <MenuItem onClick={() => navigate('/admin-query')}>
+                    {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
+                </MenuItem>
             </Menu>
 
             <Menu
@@ -176,7 +156,7 @@ export default function ProfileSettings() {
                     horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={() => navigate('/profile-settings')}>
+                <MenuItem onClick={() => navigate('/admin-settings')}>
                     {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>
@@ -194,17 +174,17 @@ export default function ProfileSettings() {
                         margin: '20px auto', 
                         display: 'flex', 
                         flexDirection: 'column', 
-                        alignItems: 'center'
+                        alignItems: 'center'  // İçeriği yatayda ortalamak için eklendi
                     }}
                 >
                     <Typography 
                         variant="h5" 
                         gutterBottom 
-                        sx={{ textAlign: 'center' }}  
+                        sx={{ textAlign: 'center' }}  // Yazıyı ortalamak için
                     >
                         {language === 'en' ? 'Change Password' : 'Şifre Değiştir'}
                     </Typography>
-                    <div className="form-field" style={{ width: '100%' }}>
+                    <div className="form-field" style={{ width: '100%' }}> {/* Form genişliğini tam yapıyoruz */}
                         <TextField
                             label={language === 'en' ? 'Current Password' : 'Mevcut Şifre'}
                             variant="outlined"
@@ -244,8 +224,8 @@ export default function ProfileSettings() {
                         sx={{ 
                             marginTop: '10px', 
                             padding: '10px', 
-                            alignSelf: 'center',
-                            maxWidth: '200px'
+                            alignSelf: 'center',  // Butonu ortalamak için
+                            maxWidth: '200px'     // Buton genişliğini sınırlıyoruz
                         }}
                         onClick={handleChangePassword}
                     >

@@ -19,9 +19,6 @@ export default function AdminHome() {
     // UserName menüsü için state
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
   
-    // Kullanıcı titleId'sini tutan state
-    const [titleId, setTitleId] = useState(null);
-  
     const handleServicesMenuOpen = (event) => {
       setServicesAnchorEl(event.currentTarget);
     };
@@ -53,9 +50,6 @@ export default function AdminHome() {
       const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
       setInitials(userInitials);
   
-      // title_id'yi localStorage'dan alıyoruz
-      const storedTitleId = localStorage.getItem('titleId');
-      setTitleId(parseInt(storedTitleId)); // title_id'yi integer olarak saklıyoruz
     }, []);
   
     const handleLanguageChange = (lang) => {
@@ -97,11 +91,11 @@ export default function AdminHome() {
               </h1>
             </div>
             <ul className="navbar-links">
-              <li onClick={() => navigate('/home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
+              <li onClick={() => navigate('/admin-home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
               <li onMouseEnter={handleServicesMenuOpen} onClick={handleServicesMenuOpen}>
                 {language === 'en' ? 'Services' : 'Hizmetler'}
               </li>
-              <li onClick={() => navigate('/contact')}>{language === 'en' ? 'Contact' : 'İletişim'}</li>
+              <li onClick={() => navigate('/admin-message')}>{language === 'en' ? 'Messages' : 'Mesajlar'}</li>
             </ul>
             <div className="navbar-profile">
               <div className="profile-initials">{initials}</div>
@@ -132,19 +126,12 @@ export default function AdminHome() {
               horizontal: 'right',
             }}
           >
-            <MenuItem onClick={() => navigate('/leaveapplication')}>
-              {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
-            </MenuItem>
-            <MenuItem onClick={() => navigate('/userquery')}>
+            <MenuItem onClick={() => navigate('/admin-query')}>
               {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
             </MenuItem>
-    
-            {/* Eğer title_id 7 ise "Kullanıcı Ekle" menüsü gösterilecek */}
-            {titleId === 7 && (
-              <MenuItem onClick={() => navigate('/add-user')}>
-                {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
-              </MenuItem>
-            )}
+            <MenuItem onClick={() => navigate('/adduser')}>
+              {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
+            </MenuItem>
           </Menu>
     
           {/* Profile menu */}
@@ -164,7 +151,7 @@ export default function AdminHome() {
               horizontal: 'right',
             }}
           >
-            <MenuItem onClick={() => navigate('/profile-settings')}>
+            <MenuItem onClick={() => navigate('/admin-settings')}>
               {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
             </MenuItem>
             <MenuItem onClick={handleLogout}>
