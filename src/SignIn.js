@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logoEn from './en.svg';
 import logoTr from './tr.svg';
@@ -9,6 +9,14 @@ function SignIn() {
   const [language, setLanguage] = useState('en');
   const [errorMessage, setErrorMessage] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const savedLanguage = localStorage.getItem('language');
+    if (savedLanguage) {
+      setLanguage(savedLanguage);
+    }
+  }, []);
+
 
   const handleChange = (e) => {
     setFormData({
@@ -64,7 +72,9 @@ function SignIn() {
 
   const handleLanguageChange = (lang) => {
     setLanguage(lang);
+    localStorage.setItem('language', lang); // Store the selected language
   };
+
 
   const logo = language === 'en' ? logoEn : logoTr;
 

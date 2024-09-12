@@ -52,9 +52,12 @@ export default function AdminHome() {
   
     }, []);
   
-    const handleLanguageChange = (lang) => {
-      setLanguage(lang);
-    };
+    useEffect(() => {
+      const savedLanguage = localStorage.getItem('language');
+      if (savedLanguage) {
+        setLanguage(savedLanguage);
+      }
+    }, []);
   
     // Images data
     const itemDataRow1 = [
@@ -200,10 +203,6 @@ export default function AdminHome() {
       </main>
     
           <footer className="footer">
-            <div className="language-buttons">
-              <button onClick={() => handleLanguageChange('en')}>English</button>
-              <button onClick={() => handleLanguageChange('tr')}>Türkçe</button>
-            </div>
             <p>
               © 2024 {language === 'en' ? 'Ministry of Treasury and Finance All rights reserved.' : 'Hazine ve Maliye Bakanlığı Tüm hakları saklıdır.'}
             </p>
