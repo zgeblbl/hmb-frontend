@@ -12,6 +12,7 @@ export default function AddUser() {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [tckn, setTckn] = useState('');
+    const [password, setPassword] = useState('');
     const [departmentId, setDepartmentId] = useState('');
     const [titleId, setTitleId] = useState('');
     const [submissionStatus, setSubmissionStatus] = useState('');
@@ -67,8 +68,10 @@ export default function AddUser() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const deptId = parseInt(departmentId);
+        const ttlId = parseInt(titleId);
 
-        if (!firstName || !lastName || !email || !tckn || !departmentId || !titleId) {
+        if (!firstName || !lastName || !email || !tckn || !password || isNaN(deptId) || isNaN(ttlId)) {
             setErrorMessage(language === 'en' ? 'All fields are required.' : 'Tüm alanlar gereklidir.');
             return;
         }
@@ -78,9 +81,14 @@ export default function AddUser() {
             lastName,
             email,
             tckn,
-            departmentId,
-            titleId,
-            deleted: false
+            password,
+            isUserDeleted: false,
+            department: {
+                departmentId: deptId
+            },
+            title: {
+                titleId: ttlId
+            }
         };
 
         try {
@@ -98,6 +106,7 @@ export default function AddUser() {
                 setLastName('');
                 setEmail('');
                 setTckn('');
+                setPassword('');
                 setDepartmentId('');
                 setTitleId('');
                 setErrorMessage('');
@@ -187,7 +196,7 @@ export default function AddUser() {
                             type="text"
                             value={firstName}
                             onChange={(e) => setFirstName(e.target.value)}
-                            placeholder={language === 'en' ? 'Enter First Name' : 'Adınızı Girin'}
+                            placeholder={language === 'en' ? 'Enter First Name' : 'Ad Giriniz'}
                         />
                     </div>
                     <div className="form-field">
@@ -196,7 +205,7 @@ export default function AddUser() {
                             type="text"
                             value={lastName}
                             onChange={(e) => setLastName(e.target.value)}
-                            placeholder={language === 'en' ? 'Enter Last Name' : 'Soyadınızı Girin'}
+                            placeholder={language === 'en' ? 'Enter Last Name' : 'Soyad Giriniz'}
                         />
                     </div>
                     <div className="form-field">
@@ -205,7 +214,16 @@ export default function AddUser() {
                             type="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            placeholder={language === 'en' ? 'Enter Email' : 'E-postanızı Girin'}
+                            placeholder={language === 'en' ? 'Enter Email' : 'E-posta Giriniz'}
+                        />
+                    </div>
+                    <div className="form-field">
+                        <label>{language === 'en' ? 'Password' : 'Şifre'}</label>
+                        <input
+                            type="text"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            placeholder={language === 'en' ? 'Enter Password' : 'Şifre Giriniz'}
                         />
                     </div>
                     <div className="form-field">
@@ -214,7 +232,7 @@ export default function AddUser() {
                             type="text"
                             value={tckn}
                             onChange={(e) => setTckn(e.target.value)}
-                            placeholder={language === 'en' ? 'Enter TCKN' : 'TCKN Girin'}
+                            placeholder={language === 'en' ? 'Enter TCKN' : 'TCKN Giriniz'}
                         />
                     </div>
                     <div className="form-field">
@@ -223,7 +241,7 @@ export default function AddUser() {
                             type="text"
                             value={departmentId}
                             onChange={(e) => setDepartmentId(e.target.value)}
-                            placeholder={language === 'en' ? 'Enter Department ID' : 'Departman ID Girin'}
+                            placeholder={language === 'en' ? 'Enter Department ID' : 'Departman ID Giriniz'}
                         />
                     </div>
                     <div className="form-field">
@@ -232,7 +250,7 @@ export default function AddUser() {
                             type="text"
                             value={titleId}
                             onChange={(e) => setTitleId(e.target.value)}
-                            placeholder={language === 'en' ? 'Enter Title ID' : 'Unvan ID Girin'}
+                            placeholder={language === 'en' ? 'Enter Title ID' : 'Unvan ID Giriniz'}
                         />
                     </div>
                     {errorMessage && <div className="error-message">{errorMessage}</div>}
@@ -252,6 +270,6 @@ export default function AddUser() {
                     <button onClick={() => handleLanguageChange('tr')}>Türkçe</button>
                 </div>
             </footer>
-        </div>
-    );
+        </div>
+    );
 }
