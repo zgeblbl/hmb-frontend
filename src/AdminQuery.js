@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 
-export default function UserQuery() {
+export default function AdminQuery() {
     const navigate = useNavigate();
     const location = useLocation();
 
@@ -21,13 +21,15 @@ export default function UserQuery() {
     const [userName, setUserName] = useState('');
     const [initials, setInitials] = useState('');
     const [anchorEl, setAnchorEl] = useState(null);
-    const [profileAnchorEl, setProfileAnchorEl] = useState(null);
     const [tckn, setTckn] = useState('');
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [results, setResults] = useState(null); // Sonuçları saklamak için state'i başta null olarak ayarladık
-    const [titleId, setTitleId] = useState(null); // titleId için state tanımlıyoruz
 
+    // UserName menüsü için state
+    const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+
+     // Profil menüsünü açma/kapama
     const handleProfileMenuOpen = (event) => {
         setProfileAnchorEl(event.currentTarget);
     };
@@ -49,21 +51,7 @@ export default function UserQuery() {
         // Baş harfleri ayarlıyoruz
         const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setInitials(userInitials);
-
-        // titleId'yi localStorage'dan alıyoruz
-        const storedTitleId = localStorage.getItem('titleId');
-        if (storedTitleId) {
-            setTitleId(parseInt(storedTitleId, 10)); // titleId'yi integer olarak ayarlıyoruz
-        }
     }, []);
-
-    const handleNavigation = (path) => {
-        if (location.pathname !== path) {
-            navigate(path, { replace: true });
-        } else {
-            handleMenuClose();
-        }
-    };
 
     const handleMenuOpen = (event) => {
         setAnchorEl(event.currentTarget);
@@ -85,13 +73,15 @@ export default function UserQuery() {
     };
 
     const handleQuery = async () => {
+        // Tüm alanların boş olup olmadığını kontrol ediyoruz
         if (!tckn && !firstName && !lastName) {
+            // Dil kontrolü yaparak uygun mesajı gösteriyoruz
             if (language === 'en') {
                 alert('Please fill in at least one field.');
             } else {
                 alert('Lütfen en az bir alanı doldurun.');
             }
-            return;
+            return; // Eğer tüm alanlar boşsa sorgulama yapılmayacak
         }
 
         const queryData = {
@@ -101,7 +91,7 @@ export default function UserQuery() {
         };
     
         try {
-            const response = await fetch('http://localhost:9090/api/hmb/users/search', {
+            const response = await fetch('http://localhost:9090/api/hmb/users/search', {  // backend portu doğru olmalı
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -123,14 +113,15 @@ export default function UserQuery() {
     };
     
     const columns = [
-        { field: 'id', headerName: 'ID', width: 90 },
+        { field: 'id', headerName: 'ID', width: 90 },  // Eğer backend id dönüyorsa
         { field: 'firstName', headerName: 'İsim', width: 150 },
         { field: 'lastName', headerName: 'Soyisim', width: 150 },
         { field: 'TCKN', headerName: 'TCKN', width: 200 }
     ];
 
+    // Gelen veriyi tablo için hazırlıyoruz
     const rows = results ? results.map((user, index) => ({
-        id: index + 1,
+        id: index + 1, // Her kullanıcıya unique bir ID veriyoruz, backend'den gelen id varsa kullan
         firstName: user.firstName,
         lastName: user.lastName,
         TCKN: user.TCKN
@@ -151,7 +142,7 @@ export default function UserQuery() {
                     <li onMouseEnter={handleMenuOpen} onClick={handleMenuOpen}>
                         {language === 'en' ? 'Services' : 'Hizmetler'}
                     </li>
-                    <li onClick={() => handleSubPageNavigation('/contact')}>{language === 'en' ? 'Contact' : 'İletişim'}</li>
+                    <li onClick={() => handleSubPageNavigation('/admin-message')}>{language === 'en' ? 'Messages' : 'Mesajlar'}</li>
                 </ul>
                 <div className="navbar-profile">
                     <div className="profile-initials">{initials}</div>
@@ -164,8 +155,6 @@ export default function UserQuery() {
                         </li>
                     </div>
             </nav>
-            
-            {/* Services menüsü */}
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
@@ -174,27 +163,12 @@ export default function UserQuery() {
                     onMouseLeave: handleMenuClose,
                 }}
             >
-                {/* titleId 1, 2, 3 için Leave Application, User Query ve İzin Başvuruları seçeneklerini gösteriyoruz */}
-                {[1, 2, 3].includes(titleId) && (
-                    <>
-                        <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
-                            {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
-                        </MenuItem>
-                        <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
-                            {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
-                        </MenuItem>
-                        <MenuItem onClick={() => handleSubPageNavigation('/leave-approvals')}>
-                            {language === 'en' ? 'Leave Approvals' : 'İzin Başvuruları'}
-                        </MenuItem>
-                    </>
-                )}
-
-                {/* titleId 4, 5, 6 için sadece Leave Application seçeneğini gösteriyoruz */}
-                {[4, 5, 6].includes(titleId) && (
-                    <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
-                        {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
-                    </MenuItem>
-                )}
+                <MenuItem onClick={() => handleSubPageNavigation('/admin-query')}>
+                    {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
+                </MenuItem>
+                <MenuItem onClick={() => navigate('/adduser')}>
+                    {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
+                </MenuItem>
             </Menu>
 
             {/* Profile menu */}
@@ -214,7 +188,7 @@ export default function UserQuery() {
                 horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={() => navigate('/profile-settings')}>
+                <MenuItem onClick={() => navigate('/admin-settings')}>
                 {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>
@@ -265,14 +239,14 @@ export default function UserQuery() {
                             {language === 'en' ? 'Search' : 'Sorgula'}
                         </Button>
                         {results !== null && (
-                            <Box sx={{ height: 350, width: '50%', marginTop: '10px', backgroundColor: '#ffffff', borderRadius: '8px', }}>
+                            <Box sx={{ height: 350, width: '50%', marginTop: '10px', backgroundColor: '#ffffff', borderRadius: '8px', }}> {/* Panelin boyutu daha da küçültüldü */}
                                 {results.length > 0 ? (
                                    <DataGrid
                                    rows={rows}
                                    columns={columns}
-                                   pageSize={5}
-                                   pagination={false}
-                                   rowsPerPageOptions={[]}
+                                   pageSize={5} /* Sabit sayfa başına satır sayısı */
+                                   pagination={false} /* Pagination tamamen devre dışı */
+                                   rowsPerPageOptions={[]} /* Rows per page ayarlarını tamamen kaldırdık */
                                    checkboxSelection
                                    disableSelectionOnClick
                                />

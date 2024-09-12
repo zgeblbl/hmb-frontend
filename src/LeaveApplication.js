@@ -16,7 +16,6 @@ export default function LeaveApplication() {
     const location = useLocation();
     const [anchorEl, setAnchorEl] = useState(null);
     const [leaveDays, setLeaveDays] = useState('');
-    const [reason] = useState('');
     const [startDate, setStartDate] = useState('');
     const [endDate, setEndDate] = useState('');
     const [leaveType, setLeaveType] = useState('');
@@ -28,6 +27,7 @@ export default function LeaveApplication() {
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
     const [errorMessage, setErrorMessage] = useState('');
     const [userId, setUserId] = useState(null);
+    const [titleId, setTitleId] = useState(null);  // titleId için state tanımlıyoruz
 
 
     // Profil menüsünü açma/kapama
@@ -71,13 +71,23 @@ export default function LeaveApplication() {
     };
 
     useEffect(() => {
-        // Example of setting initial values from localStorage or other sources
-        const storedUserName = localStorage.getItem('userName') || 'John Doe';
+        // localStorage'dan kullanıcı ID'sini alıyoruz
         const storedUserId = localStorage.getItem('userId');
-        const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
+        if (storedUserId) {
+            setUserId(storedUserId);
+        }
+
+        // titleId'yi localStorage'dan alıyoruz
+        const storedTitleId = localStorage.getItem('titleId');
+        if (storedTitleId) {
+            setTitleId(parseInt(storedTitleId, 10));  // titleId'yi integer olarak kaydediyoruz
+        }
+    
+        // Diğer işlemler
+        const storedUserName = localStorage.getItem('userName') || 'John Doe';
         setUserName(storedUserName);
+        const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setInitials(userInitials);
-        setUserId(storedUserId);
     }, []);
 
     const handleSubmit = async () => {
@@ -169,13 +179,29 @@ export default function LeaveApplication() {
                     onMouseLeave: handleMenuClose,
                 }}
             >
-                <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
-                    {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
-                </MenuItem>
-                <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
-                    {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
-                </MenuItem>
+                {/* titleId 1, 2, 3 için Leave Application, User Query ve İzin Başvuruları seçeneklerini gösteriyoruz */}
+                {[1, 2, 3].includes(titleId) && (
+                    <>
+                        <MenuItem onClick={() => navigate('/leaveapplication')}>
+                            {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
+                        </MenuItem>
+                        <MenuItem onClick={() => navigate('/userquery')}>
+                            {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
+                        </MenuItem>
+                        <MenuItem onClick={() => navigate('/leave-approvals')}>
+                            {language === 'en' ? 'Leave Approvals' : 'İzin Başvuruları'}
+                        </MenuItem>
+                    </>
+                )}
+
+                {/* titleId 4, 5, 6 için sadece Leave Application seçeneğini gösteriyoruz */}
+                {[4, 5, 6].includes(titleId) && (
+                    <MenuItem onClick={() => navigate('/leaveapplication')}>
+                        {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
+                    </MenuItem>
+                )}
             </Menu>
+
             {/* Profile menu */}
             <Menu
                 anchorEl={profileAnchorEl}

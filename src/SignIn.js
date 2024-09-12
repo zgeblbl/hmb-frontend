@@ -41,8 +41,7 @@ function SignIn() {
         console.log('Stored User ID in signin:', userId);
         
        // Admin title_id'lerini kontrol et
-      const adminTitleIds = [1, 2, 3, 7];  // Admin title_id değerleri
-      if (adminTitleIds.includes(titleId)) {
+      if (titleId ===7) {
         navigate('/admin-home');  // Admin için farklı bir sayfaya yönlendir
       } else {
         navigate('/home');  // Normal kullanıcı için yönlendirme

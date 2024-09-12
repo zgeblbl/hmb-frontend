@@ -17,6 +17,7 @@ export default function Contact() {
     const [language, setLanguage] = useState('en'); // Default language
     const [userName, setUserName] = useState('');
     const [initials, setInitials] = useState('');
+    const [titleId, setTitleId] = useState(null); // titleId için state tanımlıyoruz
 
     // UserName menüsü için state
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
@@ -49,7 +50,6 @@ export default function Contact() {
         console.log('Logged out');
         navigate('/');
     };
-
 
     const handleSubmit = async () => {
         try {
@@ -84,11 +84,16 @@ export default function Contact() {
     };
 
     useEffect(() => {
-        // Example of setting initial values from localStorage or other sources
+        // localStorage'dan kullanıcı adı ve titleId'yi alıyoruz
         const storedUserName = localStorage.getItem('userName') || 'John Doe';
         const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setUserName(storedUserName);
         setInitials(userInitials);
+
+        const storedTitleId = localStorage.getItem('titleId');
+        if (storedTitleId) {
+            setTitleId(parseInt(storedTitleId, 10)); // titleId'yi integer olarak ayarlıyoruz
+        }
     }, []);
 
     return (
@@ -119,6 +124,8 @@ export default function Contact() {
                     </li>
                 </div>
             </nav>
+
+            {/* Services menüsü */}
             <Menu
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
@@ -127,12 +134,27 @@ export default function Contact() {
                     onMouseLeave: handleMenuClose,
                 }}
             >
-                <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
-                    {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
-                </MenuItem>
-                <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
-                    {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
-                </MenuItem>
+                {/* titleId 1, 2, 3 için Leave Application, User Query ve İzin Başvuruları seçeneklerini gösteriyoruz */}
+                {[1, 2, 3].includes(titleId) && (
+                    <>
+                        <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
+                            {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
+                        </MenuItem>
+                        <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
+                            {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
+                        </MenuItem>
+                        <MenuItem onClick={() => handleSubPageNavigation('/leave-approvals')}>
+                            {language === 'en' ? 'Leave Approvals' : 'İzin Başvuruları'}
+                        </MenuItem>
+                    </>
+                )}
+
+                {/* titleId 4, 5, 6 için sadece Leave Application seçeneğini gösteriyoruz */}
+                {[4, 5, 6].includes(titleId) && (
+                    <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
+                        {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
+                    </MenuItem>
+                )}
             </Menu>
 
             {/* Profile menu */}
