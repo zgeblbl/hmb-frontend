@@ -7,9 +7,9 @@ import MenuItem from '@mui/material/MenuItem';
 
 
 function AdminMessage() {
-    const [messages, setMessages] = useState([]);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [messages, setMessages] = useState([]); // Mesajları tutacak state
+    const [loading, setLoading] = useState(true); // Yüklenme durumu
+    const [error, setError] = useState(null); // Hata durumu
     const navigate = useNavigate(); // AdminHome'daki navigasyon için ekleme
     
     // Services menüsü ve profil menüsü için state
@@ -51,33 +51,37 @@ function AdminMessage() {
   
     // Mesajları backend'den alma
     useEffect(() => {
-      const fetchMessages = async () => {
-        try {
-          const response = await fetch('http://localhost:9090/api/messages/getMessages');
-          if (!response.ok) {
-            throw new Error('Mesajlar alınamadı');
+        const fetchMessages = async () => {
+          try {
+            const response = await fetch('http://localhost:9090/api/messages/getMessages'); // Backend'deki mesajları alma API'si
+            if (!response.ok) {
+              throw new Error('Mesajlar alınamadı');
+            }
+            const data = await response.json();
+            setMessages(data); // Mesajları state'e kaydet
+            setLoading(false); // Yüklenme bitti
+          } catch (error) {
+            setError(error.message); // Hata mesajını kaydet
+            setLoading(false); // Hata durumunda da loading false olmalı
           }
-          const data = await response.json();
-          setMessages(data);
-          setLoading(false);
-        } catch (error) {
-          setError(error.message);
-          setLoading(false);
-        }
-      };
-  
-      fetchMessages();
-    }, []);
-  
+        };
+    
+        fetchMessages(); // Fonksiyonu çağır
+      }, []); // Boş dependency array, sadece component mount edildiğinde çalışır
+
+      // Mesajları en yeni tarihten en eskiye doğru sıralama
     const sortedMessages = messages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  
-    if (loading) {
-      return <div>Yükleniyor...</div>;
-    }
-  
-    if (error) {
-      return <div>Hata: {error}</div>;
-    }
+
+    
+      // Eğer hala yükleniyorsa
+      if (loading) {
+        return <div>Yükleniyor...</div>;
+      }
+    
+      // Eğer hata varsa
+      if (error) {
+        return <div>Hata: {error}</div>;
+      }
   
     return (
       <div className="homepage">
@@ -166,15 +170,20 @@ function AdminMessage() {
             ) : (
               sortedMessages.map((message) => (
                 <div key={message.id} style={styles.messageBox}>
-                  <p><strong>İsim:</strong> {message.userName}</p>
-                  <p><strong>Email:</strong> {message.userEmail}</p>
-                  <p><strong>Mesaj:</strong> {message.userMessage}</p>
-                  <p><strong>Tarih:</strong> {new Date(message.createdAt).toLocaleString()}</p>
-                </div>
+                <p><strong>İsim:</strong> {message.name}</p>
+                <p><strong>Email:</strong> {message.email}</p>
+                <p><strong>Mesaj:</strong> {message.messageContent}</p> {/* Mesaj içeriğini doğru gösteriyoruz */}
+                <p><strong>Tarih:</strong> {new Date(message.createdAt).toLocaleString()}</p> {/* Tarih formatı */}
+            </div>
               ))
             )}
           </div>
         </div>
+        <footer className="footer">
+            <p>
+              © 2024 {language === 'en' ? 'Ministry of Treasury and Finance All rights reserved.' : 'Hazine ve Maliye Bakanlığı Tüm hakları saklıdır.'}
+            </p>
+        </footer>
       </div>
     );
   }
