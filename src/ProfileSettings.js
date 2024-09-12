@@ -65,6 +65,12 @@ export default function ProfileSettings() {
         console.log('Logged out');
         navigate('/');
     };
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage) {
+          setLanguage(savedLanguage);
+        }
+      }, []);
 
     const handleChangePassword = async () => {
         if (newPassword !== confirmPassword) {
@@ -257,10 +263,6 @@ export default function ProfileSettings() {
                 <p>
                     {language === 'en' ? '© 2024 Ministry of Treasury and Finance. All rights reserved.' : '© 2024 Hazine ve Maliye Bakanlığı. Tüm hakları saklıdır.'}
                 </p>
-                <div className="language-buttons">
-                    <button onClick={() => setLanguage('en')}>English</button>
-                    <button onClick={() => setLanguage('tr')}>Türkçe</button>
-                </div>
             </footer>
         </div>
     );
