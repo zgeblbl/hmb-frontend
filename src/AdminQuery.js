@@ -169,7 +169,7 @@ export default function AdminQuery() {
                 <MenuItem onClick={() => handleSubPageNavigation('/admin-query')}>
                     {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
                 </MenuItem>
-                <MenuItem onClick={() => navigate('/adduser')}>
+                <MenuItem onClick={() => navigate('/add-user')}>
                     {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
                 </MenuItem>
             </Menu>
