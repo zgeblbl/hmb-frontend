@@ -14,6 +14,7 @@ import AdminHome from './AdminHome';
 import AdminQuery from './AdminQuery';
 import AdminMessage from './AdminMessage';
 import AdminSettings from './AdminSettings';
+import AddUser from './AddUser';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -31,6 +32,7 @@ root.render(
         <Route path="/admin-query" element={<AdminQuery/>} />
         <Route path="/admin-message" element={<AdminMessage/>} />
         <Route path="/admin-settings" element={<AdminSettings/>} />
+        <Route path="/add-user" element={<AddUser/>} />
       </Routes>
     </Router>
   </React.StrictMode>
