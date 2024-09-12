@@ -71,6 +71,7 @@ export default function AddUser() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+
         const deptId = parseInt(departmentId);
         const ttlId = parseInt(titleId);
 
@@ -134,11 +135,11 @@ export default function AddUser() {
                     </h1>
                 </div>
                 <ul className="navbar-links">
-                    <li onClick={() => handleSubPageNavigation('/home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
+                    <li onClick={() => handleSubPageNavigation('/admin-home')}>{language === 'en' ? 'Dashboard' : 'Anasayfa'}</li>
                     <li onMouseEnter={handleMenuOpen} onClick={handleMenuOpen}>
                         {language === 'en' ? 'Services' : 'Hizmetler'}
                     </li>
-                    <li onClick={() => handleSubPageNavigation('/contact')}>{language === 'en' ? 'Contact' : 'İletişim'}</li>
+                    <li onClick={() => handleSubPageNavigation('/admin-message')}>{language === 'en' ? 'Messages' : 'Mesajlar'}</li>
                 </ul>
                 <div className="navbar-profile">
                     <div className="profile-initials">{initials}</div>
@@ -159,10 +160,10 @@ export default function AddUser() {
                     onMouseLeave: handleMenuClose,
                 }}
             >
-                <MenuItem onClick={() => handleSubPageNavigation('/leaveapplication')}>
-                    {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
+                <MenuItem onClick={() => navigate('/add-user')}>
+                    {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
                 </MenuItem>
-                <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
+                <MenuItem onClick={() => handleSubPageNavigation('/admin-query')}>
                     {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
                 </MenuItem>
             </Menu>
@@ -183,7 +184,7 @@ export default function AddUser() {
                 horizontal: 'right',
                 }}
             >
-                <MenuItem onClick={() => navigate('/profile-settings')}>
+                <MenuItem onClick={() => navigate('/admin-settings')}>
                 {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
                 </MenuItem>
                 <MenuItem onClick={handleLogout}>

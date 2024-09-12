@@ -136,7 +136,6 @@ export default function AdminHome() {
               {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
             </MenuItem>
           </Menu>
-    
           {/* Profile menu */}
           <Menu
             anchorEl={profileAnchorEl}
