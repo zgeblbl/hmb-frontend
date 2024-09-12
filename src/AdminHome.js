@@ -129,14 +129,13 @@ export default function AdminHome() {
               horizontal: 'right',
             }}
           >
+            <MenuItem onClick={() => navigate('/admin-query')}>
+              {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
+            </MenuItem>
             <MenuItem onClick={() => navigate('/add-user')}>
-                    {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
-                </MenuItem>
-                <MenuItem onClick={() => navigate('/admin-query')}>
-                    {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
-                </MenuItem>
+              {language === 'en' ? 'Add User' : 'Kullanıcı Ekle'}
+            </MenuItem>
           </Menu>
-    
           {/* Profile menu */}
           <Menu
             anchorEl={profileAnchorEl}

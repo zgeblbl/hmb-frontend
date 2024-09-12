@@ -31,6 +31,12 @@ export default function AdminSettings() {
     const handleProfileMenuClose = () => {
         setProfileAnchorEl(null);
     };
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage) {
+          setLanguage(savedLanguage);
+        }
+      }, []);
 
     useEffect(() => {
         // localStorage'dan kullanıcı ID'sini alıyoruz
@@ -237,10 +243,6 @@ export default function AdminSettings() {
                 <p>
                     {language === 'en' ? '© 2024 Ministry of Treasury and Finance. All rights reserved.' : '© 2024 Hazine ve Maliye Bakanlığı. Tüm hakları saklıdır.'}
                 </p>
-                <div className="language-buttons">
-                    <button onClick={() => setLanguage('en')}>English</button>
-                    <button onClick={() => setLanguage('tr')}>Türkçe</button>
-                </div>
             </footer>
         </div>
     );

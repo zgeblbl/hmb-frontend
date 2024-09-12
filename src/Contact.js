@@ -79,9 +79,12 @@ export default function Contact() {
         }
     };
 
-    const handleLanguageChange = (lang) => {
-        setLanguage(lang);
-    };
+    useEffect(() => {
+        const savedLanguage = localStorage.getItem('language');
+        if (savedLanguage) {
+          setLanguage(savedLanguage);
+        }
+      }, []);
 
     useEffect(() => {
         // localStorage'dan kullanıcı adı ve titleId'yi alıyoruz
@@ -226,10 +229,6 @@ export default function Contact() {
                 <p>
                     {language === 'en' ? '© 2024 Ministry of Treasury and Finance. All rights reserved.' : '© 2024 Hazine ve Maliye Bakanlığı. Tüm hakları saklıdır.'}
                 </p>
-                <div className="language-buttons">
-                    <button onClick={() => handleLanguageChange('en')}>English</button>
-                    <button onClick={() => handleLanguageChange('tr')}>Türkçe</button>
-                </div>
             </footer>
         </div>
     );
