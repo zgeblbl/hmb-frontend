@@ -48,6 +48,12 @@ function AdminMessage() {
       const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
       setInitials(userInitials);
     }, []);
+    useEffect(() => {
+      const savedLanguage = localStorage.getItem('language');
+      if (savedLanguage) {
+        setLanguage(savedLanguage);
+      }
+    }, []);
   
     // Mesajları backend'den alma
     useEffect(() => {
