@@ -4,12 +4,9 @@ import './LeaveRequestManagement.css';
 import logo from './logo.svg';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
-import Box from '@mui/material/Box';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+import Collapse from '@mui/material/Collapse';
+
 
 export default function LeaveRequestManagement() {
     const navigate = useNavigate();
@@ -21,6 +18,9 @@ export default function LeaveRequestManagement() {
     const [titleId, setTitleId] = useState(null);
     const [userId, setUserId] = useState(null);
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+    const [leaveRequests, setLeaveRequests] = useState([]);
+    const [error, setError] = useState(null);
+    const [expandedRequestId, setExpandedRequestId] = useState(null);
 
     // Profil menüsünü açma/kapama
     const handleProfileMenuOpen = (event) => {
@@ -77,6 +77,74 @@ export default function LeaveRequestManagement() {
         setInitials(userInitials);
     }, []);
 
+    useEffect(() => {
+        const fetchLeaveRequests = async () => {
+            const departmentId = 2; // Example departmentId, replace with your logic if needed
+            try {
+                const response = await fetch(`http://localhost:9090/api/hmb/permissions/getDepartmentPermissions/${departmentId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                // Assuming your API returns an array of leave requests
+                setLeaveRequests(data);
+            } catch (error) {
+                console.error('Error fetching leave requests:', error);
+                setError('Failed to fetch leave requests.');
+            }
+        };
+    
+        fetchLeaveRequests();
+    }, []);
+    
+    const approveLeaveRequest = async (requestId) => {
+        try {
+            const response = await fetch(`http://localhost:9090/api/hmb/permissions/approvePermission/${requestId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to approve leave request');
+            }
+            setLeaveRequests(prevRequests =>
+                prevRequests.map(req =>
+                    req.id === requestId ? { ...req, is_permission_approved: true } : req
+                )
+            );
+        } catch (error) {
+            console.error('Error approving leave request:', error);
+        }
+    };
+    
+    const declineLeaveRequest = async (requestId) => {
+        try {
+            const response = await fetch(`http://localhost:9090/api/hmb/permissions/declinePermission/${requestId}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                }
+            });
+            if (!response.ok) {
+                throw new Error('Failed to decline leave request');
+            }
+            setLeaveRequests(prevRequests =>
+                prevRequests.map(req =>
+                    req.id === requestId ? { ...req, is_permission_approved: false } : req
+                )
+            );
+        } catch (error) {
+            console.error('Error declining leave request:', error);
+        }
+    };
+    const handleRequestClick = (requestId) => {
+        handleExpandRequest(requestId);
+    };
+    const handleExpandRequest = (requestId) => {
+        setExpandedRequestId(prevId => (prevId === requestId ? null : requestId));
+    };
+
 
     return (
         <div className="leave-request-management">
@@ -110,13 +178,9 @@ export default function LeaveRequestManagement() {
                 anchorEl={anchorEl}
                 open={Boolean(anchorEl)}
                 onClose={handleMenuClose}
-                MenuListProps={{
-                    onMouseLeave: handleMenuClose,
-                }}
             >
-                {/* titleId 1, 2, 3 için Leave Application, User Query ve İzin Başvuruları seçeneklerini gösteriyoruz */}
-                {[1, 2, 3].includes(titleId) && (
-                    <>
+                {titleId === 1 || titleId === 2 || titleId === 3 ? (
+                    <div>
                         <MenuItem onClick={() => navigate('/leaveapplication')}>
                             {language === 'en' ? 'Leave Application' : 'İzin Başvurusu'}
                         </MenuItem>
@@ -126,8 +190,8 @@ export default function LeaveRequestManagement() {
                         <MenuItem onClick={() => handleSubPageNavigation('/leave-request-management')}>
                             {language === 'en' ? 'Leave Request Management' : 'İzin Başvuru Yönetimi'}
                         </MenuItem>
-                    </>
-                )}
+                    </div>
+                ) : null}
             </Menu>
 
             {/* Profile menu */}
@@ -155,6 +219,38 @@ export default function LeaveRequestManagement() {
                 </MenuItem>
             </Menu>
             <main className="content">
+            <h2>{language === 'en' ? 'Leave Request Management' : 'İzin Başvuru Yönetimi'}</h2>
+            <div className="leave-requests">
+                {leaveRequests.length === 0 ? (
+                    <p>{language === 'en' ? 'No leave requests found for your department.' : 'Bölümünüz için izin başvurusu bulunamadı.'}</p>
+                ) : (
+                    leaveRequests.map(request => (
+                        <div key={request.userPermissionId} className="leave-request-tab">
+                            <div 
+                                className="tab-header" 
+                                onClick={() => handleExpandRequest(request.userPermissionId)}
+                            >
+                                {request.user.firstName} {request.user.lastName}
+                            </div>
+                            <Collapse in={expandedRequestId === request.userPermissionId}>
+                                <div className="tab-content">
+                                    <p><strong>{language === 'en' ? 'Start Date:' : 'Başlangıç Tarihi:'} </strong>{request.startDate}</p>
+                                    <p><strong>{language === 'en' ? 'End Date:' : 'Bitiş Tarihi:'} </strong>{request.endDate}</p>
+                                    <p><strong>{language === 'en' ? 'Leave Type:' : 'İzin Türü:'} </strong>{request.permissionType}</p>
+                                    <div className="tab-actions">
+                                        <Button variant="contained" color="success" onClick={() => approveLeaveRequest(request.userPermissionId)}>
+                                            {language === 'en' ? 'Approve' : 'Onayla'}
+                                        </Button>
+                                        <Button variant="contained" color="error" onClick={() => declineLeaveRequest(request.userPermissionId)}>
+                                            {language === 'en' ? 'Decline' : 'Reddet'}
+                                        </Button>
+                                    </div>
+                                </div>
+                            </Collapse>
+                        </div>
+                    ))
+                )}
+            </div>
 
             </main>
             <footer className="footer">
