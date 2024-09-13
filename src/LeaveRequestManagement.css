@@ -1,22 +1,20 @@
-.leave-request-management {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh;
-    background-color: #002B5C; /* Match background color */
-}
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
 }
-h2 {
-    font-size: 24px;
-    color: #343a40;
-    margin-bottom: 20px;
+
+.leave-request-management {
+    font-family: Arial, sans-serif;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background-color: #002B5C; /* Background color for the main container */
 }
 
+/* Navbar Styles */
 .navbar {
     display: flex;
     justify-content: space-between;
@@ -92,6 +90,8 @@ h2 {
     font-weight: 500;
     line-height: 1;
 }
+
+/* Main Content and Footer */
 .content {
     padding: 20px;
     display: flex;
@@ -99,58 +99,72 @@ h2 {
     align-items: center;
     flex: 1;
 }
+
 .footer {
-    background-color: #002B5C; /* Match background color */
-    color: white; /* White text color */
-    text-align: center; /* Center text */
-    position: fixed; /* Fix position */
+    background-color: #002B5C; /* Background color for the footer */
+    color: white; /* Text color for the footer */
+    text-align: center; /* Center text in the footer */
+    position: fixed; /* Fix the footer at the bottom */
     width: 100%;
     bottom: 0;
     padding: 20px 0;
     font-size: 14px;
 }
 
+/* Leave Requests Section */
 .leave-requests {
     margin-top: 20px;
-    background-color: #ffffff;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     padding: 20px;
 }
 
 .leave-request-tabs {
-    border-bottom: 1px solid #e0e0e0;
-    padding: 10px 0;
-    border-radius: 4px;
+    padding: 15px 0;
+    border-bottom: 1px solid #002B5C; /* Light border below tabs */
+    margin-bottom: 20px; /* Add space between sections */
 }
-/* Add margin between leave request tabs */
+
 .leave-request-tab {
-    border-bottom: 1px solid #002B5C;
-    padding: 10px 0;
-    margin-bottom: 10px; /* Add gap between tabs */
+    width: 100%; /* Ensure full width inside the panel */
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f5f5f5;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow for depth */
+    border: 1px solid #e0e0e0; /* Border to define the tab */
+    position: relative; /* Ensure content stays within the borders */
+}
+.leave-request-tab + .leave-request-tab {
+    border-top: 2px solid #e0e0e0; /* Add a border gap between tabs */
 }
 
 .leave-request-tab:last-child {
-    margin-bottom: 0; /* Remove bottom margin from the last tab */
+    margin-bottom: 0; /* No bottom margin for the last tab */
 }
 
-
 .tab-header {
-    padding: 10px;
+    padding: 15px;
     cursor: pointer;
     background-color: #f5f5f5;
     font-weight: bold;
-    font-size: 18px;
-    cursor: pointer;
+    font-size: 20px;
     color: #002B5C;
     margin-bottom: 10px;
+    border-radius: 5px;
 }
 
 .tab-content {
-    padding: 10px;
+    padding: 20px;
     background-color: #fff;
     margin-top: 10px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    line-height: 1.6;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05); /* Soft shadow for depth */
+    border: 1px solid #e0e0e0; /* Border around the content */
 }
+
 .tab-content p {
     margin: 5px 0;
 }
@@ -158,15 +172,55 @@ h2 {
 .tab-content strong {
     font-weight: bold;
 }
+.leave-request-container {
+    max-width: 900px; /* Increase panel width */
+    margin: 20px auto; /* Add more top and bottom margin */
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* More prominent shadow */
+    overflow: hidden; /* Ensure no content spills out of the container */
+}
+.tab-actions button {
+    font-size: 1rem; /* Adjust button font size */
+    padding: 10px 20px; /* Increase button padding */
+}
+
+/* Container for the date and duration sections */
+.date-duration-container {
+    display: flex;
+    justify-content: space-between; /* Spread items */
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.date-section, .info-section {
+    flex: 1;
+    padding: 10px;
+    min-width: 200px;
+}
+
+.date-section p, .info-section p {
+    margin: 10px 0;
+    font-size: 16px;
+}
 
 .tab-actions {
-    margin-top: 10px;
     display: flex;
-    gap: 10px;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
 }
+.tab-actions button {
+    font-size: 16px;
+    padding: 10px 20px;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
 .tab-actions .MuiButton-contained {
     font-weight: bold;
 }
+
 .tab-actions .MuiButton-contained-success {
     background-color: #28a745;
     color: #ffffff;
@@ -176,13 +230,15 @@ h2 {
     background-color: #dc3545;
     color: #ffffff;
 }
+
 .page-title {
     color: #ffffff;
     background-color: #002B5C;
-    padding: 10px;
-    border-radius: 5px;
+    padding: 15px;
+    border-radius: 8px;
     text-align: center;
-    font-size: 24px;
+    font-size: 26px;
+    margin-bottom: 30px;
 }
 
 .error-message {
