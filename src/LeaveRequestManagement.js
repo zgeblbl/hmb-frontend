@@ -29,6 +29,7 @@ export default function LeaveRequestManagement() {
     const [userName, setUserName] = useState('');
     const [initials, setInitials] = useState('');
     const [titleId, setTitleId] = useState(null);
+    const [departmentId, setDepartmentId] = useState(null);
     const [userId, setUserId] = useState(null);
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
     const [leaveRequests, setLeaveRequests] = useState([]);
@@ -92,7 +93,7 @@ export default function LeaveRequestManagement() {
 
     useEffect(() => {
         const fetchLeaveRequests = async () => {
-            const departmentId = 2; // Example departmentId, replace with your logic if needed
+            const departmentId = localStorage.getItem('departmentId');
             try {
                 const response = await fetch(`http://localhost:9090/api/hmb/permissions/getDepartmentPermissions/${departmentId}`);
                 if (!response.ok) {
