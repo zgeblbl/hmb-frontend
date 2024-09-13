@@ -247,10 +247,16 @@ export default function LeaveRequestManagement() {
                             </div>
                             <Collapse in={expandedRequestId === request.userPermissionId}>
                                 <div className="tab-content">
-                                    <p><strong>{language === 'en' ? 'Start Date:' : 'Başlangıç Tarihi:'} </strong>{request.startDate}</p>
-                                    <p><strong>{language === 'en' ? 'End Date:' : 'Bitiş Tarihi:'} </strong>{request.endDate}</p>
-                                    <p><strong>{language === 'en' ? 'Duration:' : 'Süre:'} </strong>{calculateDuration(request.startDate, request.endDate)} {language === 'en' ? 'days' : 'gün'}</p>
-                                    <p><strong>{language === 'en' ? 'Leave Type:' : 'İzin Türü:'} </strong>{request.permissionType}</p>
+                                    <div className="date-duration-container">
+                                        <div className="date-section">
+                                            <p><strong>{language === 'en' ? 'Start Date:' : 'Başlangıç Tarihi:'} </strong>{request.startDate}</p>
+                                            <p><strong>{language === 'en' ? 'End Date:' : 'Bitiş Tarihi:'} </strong>{request.endDate}</p>
+                                        </div>
+                                        <div className="date-section">
+                                            <p><strong>{language === 'en' ? 'Duration:' : 'Süre:'} </strong>{calculateDuration(request.startDate, request.endDate)} {language === 'en' ? 'days' : 'gün'}</p>
+                                            <p><strong>{language === 'en' ? 'Leave Type:' : 'İzin Türü:'} </strong>{request.permissionType}</p>
+                                        </div>
+                                    </div>
                                     <div className="tab-actions">
                                         <Button variant="contained" color="success" onClick={() => approveLeaveRequest(request.userPermissionId)}>
                                             {language === 'en' ? 'Approve' : 'Onayla'}
