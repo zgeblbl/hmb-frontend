@@ -113,7 +113,7 @@ export default function LeaveRequestManagement() {
     const approveLeaveRequest = async (requestId) => {
         try {
             const response = await fetch(`http://localhost:9090/api/hmb/permissions/approvePermission/${requestId}`, {
-                method: 'PUT',
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 }
@@ -134,7 +134,7 @@ export default function LeaveRequestManagement() {
     const declineLeaveRequest = async (requestId) => {
         try {
             const response = await fetch(`http://localhost:9090/api/hmb/permissions/declinePermission/${requestId}`, {
-                method: 'PUT',
+                method: 'PATCH',
                 headers: {
                     'Content-Type': 'application/json',
                 }

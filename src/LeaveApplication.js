@@ -111,9 +111,9 @@ export default function LeaveApplication() {
         const leaveData = {
             startDate,
             endDate,
-            isPermissionApproved: false, // Default to false, or set based on your logic
+            isPermissionApproved: null, // Default to false, or set based on your logic
             approvalDate: '', // Empty initially, set if needed
-            isPermissionDeleted: false, // Default to false
+            isPermissionDeleted: false,
             user: {
                 userId: userId // Or get the actual userId dynamically
             },
