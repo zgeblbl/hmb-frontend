@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './ProfileSettings.css';
 import './HomePage';
 import { useNavigate} from 'react-router-dom';
 import logo from './logo.svg';
@@ -152,8 +151,8 @@ export default function ProfileSettings() {
                         <MenuItem onClick={() => navigate('/userquery')}>
                             {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
                         </MenuItem>
-                        <MenuItem onClick={() => navigate('/leave-approvals')}>
-                            {language === 'en' ? 'Leave Approvals' : 'İzin Başvuruları'}
+                        <MenuItem onClick={() => navigate('/leave-request-management')}>
+                            {language === 'en' ? 'Leave Request Management' : 'İzin Başvuru Yönetimi'}
                         </MenuItem>
                     </>
                 )}

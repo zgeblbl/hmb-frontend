@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './ProfileSettings.css';
 import './HomePage';
 import { useNavigate} from 'react-router-dom';
 import logo from './logo.svg';

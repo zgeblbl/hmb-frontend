@@ -134,30 +134,3 @@ body {
     padding: 20px 0; /* Üst ve alt boşluk */
     font-size: 14px; /* Metin boyutu */
 }
-.language-buttons {
-    display: flex;
-    gap: 0.5rem;
-    position: fixed; /* Fixes the position relative to the viewport */
-    bottom: 4rem; /* Distance from the bottom of the viewport */
-    right: 1rem; /* Distance from the right edge of the viewport */
-    z-index: 1000; /* Ensure it appears above other content */
-    background-color: transparent; /* Transparent background to ensure visibility */
-    padding: 0.5rem; /* Padding for better visual appearance */
-    border-radius: 0.25rem; /* Rounded corners for aesthetic */
-}
-
-.language-buttons button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 0.25rem;
-}
-
-.language-buttons button:hover {
-    background-color: #0056b3;
-}
-
-
-
