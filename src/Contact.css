@@ -108,28 +108,3 @@
     padding: 20px 0;
     font-size: 14px;
 }
-
-.language-buttons {
-    display: flex;
-    gap: 0.5rem;
-    position: fixed;
-    bottom: 4rem;
-    right: 1rem;
-    z-index: 1000;
-    background-color: transparent;
-    padding: 0.5rem;
-    border-radius: 0.25rem;
-}
-
-.language-buttons button {
-    background-color: #007bff;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    border-radius: 0.25rem;
-}
-
-.language-buttons button:hover {
-    background-color: #0056b3;
-}
