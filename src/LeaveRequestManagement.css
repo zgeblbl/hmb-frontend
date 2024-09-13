@@ -98,3 +98,36 @@
     padding: 20px 0;
     font-size: 14px;
 }
+
+.leave-requests {
+    margin-top: 20px;
+}
+
+.leave-request-tabs {
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.leave-request-tab {
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-header {
+    padding: 10px;
+    cursor: pointer;
+    background-color: #f5f5f5;
+    font-weight: bold;
+}
+
+.tab-content {
+    padding: 10px;
+    background-color: #fff;
+}
+
+.tab-actions {
+    margin-top: 10px;
+}
+
+.error-message {
+    color: red;
+}

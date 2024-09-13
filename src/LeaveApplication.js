@@ -96,7 +96,7 @@ export default function LeaveApplication() {
     const handleSubmit = async () => {
         const start = new Date(startDate);
         const end = new Date(endDate);
-        const durationInDays = (end - start) / (1000 * 60 * 60 * 24);
+        const durationInDays = ((end - start) / (1000 * 60 * 60 * 24))-1;
 
         // Validate the date range
         if (end <= start) {
