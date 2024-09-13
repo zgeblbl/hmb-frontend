@@ -40,13 +40,14 @@ function SignIn() {
       if (response.ok) {
         const result = await response.json();  // JSON formatında veri alıyoruz
         
-        const { firstName, lastName, userId, titleId} = result;
+        const { firstName, lastName, userId, titleId, departmentId} = result;
         console.log('API Response:', result);
         localStorage.setItem('userName', `${firstName} ${lastName}`);
         localStorage.setItem('userId', userId);
         localStorage.setItem('titleId', titleId);  // title_id'yi kaydediyoruz
+        localStorage.setItem('departmentId', departmentId);
 
-        console.log('Stored User ID in signin:', userId);
+        console.log('Stored departmentId  in signin:', departmentId);
         
        // Admin title_id'lerini kontrol et
       if (titleId ===7) {
