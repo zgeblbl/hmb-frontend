@@ -7,6 +7,19 @@ import MenuItem from '@mui/material/MenuItem';
 import Button from '@mui/material/Button';
 import Collapse from '@mui/material/Collapse';
 
+const calculateDuration = (startDate, endDate) => {
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+    
+    // Check if dates are valid
+    if (isNaN(start.getTime()) || isNaN(end.getTime())) {
+        return 'Invalid date';
+    }
+
+    const differenceInTime = end.getTime() - start.getTime();
+    const differenceInDays = differenceInTime / (1000 * 3600 * 24);
+    return Math.round(differenceInDays);
+};
 
 export default function LeaveRequestManagement() {
     const navigate = useNavigate();
@@ -219,7 +232,7 @@ export default function LeaveRequestManagement() {
                 </MenuItem>
             </Menu>
             <main className="content">
-            <h2>{language === 'en' ? 'Leave Request Management' : 'İzin Başvuru Yönetimi'}</h2>
+            <h2 className="page-title">{language === 'en' ? 'Leave Request Management' : 'İzin Başvuru Yönetimi'}</h2>
             <div className="leave-requests">
                 {leaveRequests.length === 0 ? (
                     <p>{language === 'en' ? 'No leave requests found for your department.' : 'Bölümünüz için izin başvurusu bulunamadı.'}</p>
@@ -236,6 +249,7 @@ export default function LeaveRequestManagement() {
                                 <div className="tab-content">
                                     <p><strong>{language === 'en' ? 'Start Date:' : 'Başlangıç Tarihi:'} </strong>{request.startDate}</p>
                                     <p><strong>{language === 'en' ? 'End Date:' : 'Bitiş Tarihi:'} </strong>{request.endDate}</p>
+                                    <p><strong>{language === 'en' ? 'Duration:' : 'Süre:'} </strong>{calculateDuration(request.startDate, request.endDate)} {language === 'en' ? 'days' : 'gün'}</p>
                                     <p><strong>{language === 'en' ? 'Leave Type:' : 'İzin Türü:'} </strong>{request.permissionType}</p>
                                     <div className="tab-actions">
                                         <Button variant="contained" color="success" onClick={() => approveLeaveRequest(request.userPermissionId)}>
