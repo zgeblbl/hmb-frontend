@@ -207,6 +207,7 @@ function AdminMessage() {
       width: '60%', // Panelin genişliğini %60 olarak ayarladık
       maxWidth: '800px', // Maksimum genişlik ayarı (örneğin 800px)
       minWidth: '300px', // Minimum genişlik ayarı
+      marginBottom: '80px',
     },
     messageBox: {
       marginBottom: '20px',

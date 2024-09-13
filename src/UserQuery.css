@@ -2,6 +2,7 @@
     display: flex;
     flex-direction: column;
     min-height: 100vh; /* Sayfa yüksekliğini tüm ekran yüksekliğine yay */
+    padding-bottom: 60px;
 }
 
 /* İçeriği esnek yaparak footer'ı alta it */
