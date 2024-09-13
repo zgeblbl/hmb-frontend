@@ -146,8 +146,8 @@ export default function Contact() {
                         <MenuItem onClick={() => handleSubPageNavigation('/userquery')}>
                             {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
                         </MenuItem>
-                        <MenuItem onClick={() => handleSubPageNavigation('/leave-approvals')}>
-                            {language === 'en' ? 'Leave Approvals' : 'İzin Başvuruları'}
+                        <MenuItem onClick={() => handleSubPageNavigation('/leave-request-management')}>
+                            {language === 'en' ? 'Leave Request Management' : 'İzin Başvuru Yönetimi'}
                         </MenuItem>
                     </>
                 )}

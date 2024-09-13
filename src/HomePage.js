@@ -150,8 +150,8 @@ export default function HomePage() {
             <MenuItem onClick={() => navigate('/userquery')}>
               {language === 'en' ? 'User Query' : 'Kullanıcı Sorgulama'}
             </MenuItem>
-            <MenuItem onClick={() => navigate('/leave-approvals')}>
-              {language === 'en' ? 'Leave Approvals' : 'İzin Başvuruları'}
+            <MenuItem onClick={() => navigate('/leave-request-management')}>
+              {language === 'en' ? 'Leave Request Management' : 'İzin Başvuru Yönetimi'}
             </MenuItem>
           </>
         )}
