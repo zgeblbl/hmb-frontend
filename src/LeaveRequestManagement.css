@@ -12,6 +12,7 @@ body {
     flex-direction: column;
     min-height: 100vh;
     background-color: #002B5C; /* Background color for the main container */
+    padding-bottom: 60px;
 }
 
 /* Navbar Styles */

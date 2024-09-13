@@ -4,6 +4,7 @@
     flex-direction: column;
     min-height: 100vh;
     background-color: #002B5C; /* Match background color */
+    padding-bottom: 60px;
 }
 
 .navbar {
