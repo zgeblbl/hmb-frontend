@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import './UserQuery.css';
-import './HomePage';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
 import logo from './logo.svg';
@@ -232,7 +231,6 @@ export default function UserQuery() {
                     <div className="form-field">
                         <TextField
                             label="TCKN"
-                            variant="outlined"
                             fullWidth
                             margin="normal"
                             value={tckn}
@@ -242,7 +240,6 @@ export default function UserQuery() {
                     <div className="form-field">
                         <TextField
                             label="İsim"
-                            variant="outlined"
                             fullWidth
                             margin="normal"
                             value={firstName}
@@ -252,7 +249,6 @@ export default function UserQuery() {
                     <div className="form-field">
                         <TextField
                             label="Soyisim"
-                            variant="outlined"
                             fullWidth
                             margin="normal"
                             value={lastName}
