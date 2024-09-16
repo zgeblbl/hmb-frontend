@@ -3,7 +3,7 @@ import './UserQuery.css';
 import './HomePage';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { DataGrid } from '@mui/x-data-grid';
-import logo from './logo.svg';
+import logo from './media/logo.svg';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import logoEn from './en.svg';
-import logoTr from './tr.svg';
+import logoEn from './media/en.svg';
+import logoTr from './media/tr.svg';
 import './SignIn.css';
 
 function SignIn() {
