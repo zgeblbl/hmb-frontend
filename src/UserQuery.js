@@ -100,7 +100,9 @@ export default function UserQuery() {
         const queryData = {
             TCKN: tckn || "",  
             firstName: firstName || "",
-            lastName: lastName || ""
+            lastName: lastName || "",
+            usertitleId: localStorage.getItem('titleId'),
+            userdepartmentId: localStorage.getItem('departmentId')
         };
     
         try {
@@ -136,7 +138,7 @@ export default function UserQuery() {
         id: index + 1,
         firstName: user.firstName,
         lastName: user.lastName,
-        TCKN: user.TCKN
+        TCKN: user.tckn
     })) : [];
 
     return (
@@ -276,8 +278,6 @@ export default function UserQuery() {
                                    pageSize={5}
                                    pagination={false}
                                    rowsPerPageOptions={[]}
-                                   checkboxSelection
-                                   disableSelectionOnClick
                                />
                                 ) : (
                                     <Typography>No results found</Typography>

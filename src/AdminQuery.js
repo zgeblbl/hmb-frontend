@@ -90,7 +90,9 @@ export default function AdminQuery() {
         const queryData = {
             TCKN: tckn || "",  
             firstName: firstName || "",
-            lastName: lastName || ""
+            lastName: lastName || "",
+            usertitleId: localStorage.getItem('titleId'),
+            userdepartmentId: localStorage.getItem('departmentId')
         };
     
         try {
@@ -127,7 +129,7 @@ export default function AdminQuery() {
         id: index + 1, // Her kullanıcıya unique bir ID veriyoruz, backend'den gelen id varsa kullan
         firstName: user.firstName,
         lastName: user.lastName,
-        TCKN: user.TCKN
+        TCKN: user.tckn
     })) : [];
 
     return (
@@ -250,8 +252,6 @@ export default function AdminQuery() {
                                    pageSize={5} /* Sabit sayfa başına satır sayısı */
                                    pagination={false} /* Pagination tamamen devre dışı */
                                    rowsPerPageOptions={[]} /* Rows per page ayarlarını tamamen kaldırdık */
-                                   checkboxSelection
-                                   disableSelectionOnClick
                                />
                                 ) : (
                                     <Typography>No results found</Typography>
