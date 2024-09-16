@@ -52,6 +52,14 @@ export default function Contact() {
     };
 
     const handleSubmit = async () => {
+        const storedEmail = localStorage.getItem('email');
+
+        // Check if the entered email matches the signed-in user's email
+        if (email !== storedEmail) {
+            alert(language === 'en' ? 'The entered email does not match the signed-in user\'s email.' : 'Girilen e-posta, oturum açmış kullanıcının e-postası ile eşleşmiyor.');
+            return;
+        }
+
         try {
             const response = await fetch('http://localhost:9090/api/messages', {
                 method: 'POST',

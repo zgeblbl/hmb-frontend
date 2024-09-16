@@ -40,12 +40,13 @@ function SignIn() {
       if (response.ok) {
         const result = await response.json();  // JSON formatında veri alıyoruz
         
-        const { firstName, lastName, userId, titleId, departmentId} = result;
+        const { firstName, lastName, userId, titleId, departmentId, email} = result;
         console.log('API Response:', result);
         localStorage.setItem('userName', `${firstName} ${lastName}`);
         localStorage.setItem('userId', userId);
         localStorage.setItem('titleId', titleId);  // title_id'yi kaydediyoruz
         localStorage.setItem('departmentId', departmentId);
+        localStorage.setItem('email', email);
 
         console.log('Stored departmentId  in signin:', departmentId);
         
