@@ -198,7 +198,7 @@ export default function LeaveRequestView(){
                             style={{ padding: '20px', marginBottom: '15px', fontSize: '18px' }}
                         >
                             <div className="leave-request-summary">
-                                <span>{language === 'en' ? request.permissionType : translatePermissionType(request.permissionType)}</span>
+                                <span style={{fontWeight: 'bold'}}>{language === 'en' ? request.permissionType : translatePermissionType(request.permissionType)}</span>
                                 {/* Spacer for more separation */}
                                 <span style={{ margin: '0 15px' }}>  </span>
 
@@ -216,9 +216,9 @@ export default function LeaveRequestView(){
                             </div>
                             {expandedRequestId === request.userPermissionId && (
                                 <div className="leave-request-details">
-                                    <p>{language === 'en' ? 'Start Date:' : 'Başlangıç Tarihi:'} {request.startDate}</p>
-                                    <p>{language === 'en' ? 'End Date:' : 'Bitiş Tarihi:'} {request.endDate}</p>
-                                    <p>{language === 'en' ? 'Approval Date:' : 'Onay Tarihi:'} {request.approvalDate ? request.approvalDate : (language === 'en' ? 'Not Available' : 'Mevcut Değil')}</p>
+                                    <p><strong>{language === 'en' ? 'Start Date:' : 'Başlangıç Tarihi:'}</strong> {request.startDate}</p>
+                                    <p><strong>{language === 'en' ? 'End Date:' : 'Bitiş Tarihi:'}</strong> {request.endDate}</p>
+                                    <p><strong>{language === 'en' ? 'Approval Date:' : 'Onay Tarihi:'}</strong> {request.approvalDate ? request.approvalDate : (language === 'en' ? 'Not Available' : 'Mevcut Değil')}</p>
                                 </div>
                             )}
                         </Box>

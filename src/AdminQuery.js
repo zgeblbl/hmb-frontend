@@ -215,7 +215,7 @@ export default function AdminQuery() {
                     </div>
                     <div className="form-field">
                         <TextField
-                            label="İsim"
+                            label={language === 'en' ? 'First Name' : 'İsim'}
                             variant="outlined"
                             fullWidth
                             margin="normal"
@@ -225,7 +225,7 @@ export default function AdminQuery() {
                     </div>
                     <div className="form-field">
                         <TextField
-                            label="Soyisim"
+                            label={language === 'en' ? 'Last Name' : 'Soyisim'}
                             variant="outlined"
                             fullWidth
                             margin="normal"
@@ -254,7 +254,7 @@ export default function AdminQuery() {
                                    rowsPerPageOptions={[]} /* Rows per page ayarlarını tamamen kaldırdık */
                                />
                                 ) : (
-                                    <Typography>No results found</Typography>
+                                    <Typography>{language === 'en' ? 'No results found' : 'Sonuç bulunamadı'}</Typography>
                                 )}
                             </Box>
                         )}

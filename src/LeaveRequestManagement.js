@@ -258,15 +258,15 @@ export default function LeaveRequestManagement() {
                                         </div>
                                         <div className="date-section">
                                             <p><strong>{language === 'en' ? 'Duration:' : 'Süre:'} </strong>{calculateDuration(request.startDate, request.endDate)} {language === 'en' ? 'days' : 'gün'}</p>
-                                            <p><strong>{language === 'en' ? 'Leave Type:' : 'İzin Türü:'} </strong>{request.permissionType}</p>
+                                            <p><strong>{language === 'en' ? 'Leave Type:' : 'İzin Türü:'} </strong>{language === 'en' ? request.permissionType : translatePermissionType(request.permissionType)}</p>
                                         </div>
                                     </div>
                                     <div className="tab-actions">
                                         <Button variant="contained" color="success" onClick={() => approveLeaveRequest(request.userPermissionId)}>
-                                            {language === 'en' ? 'Approve' : 'Onayla'}
+                                            {language === 'en' ? 'APPROVE' : 'Onayla'}
                                         </Button>
                                         <Button variant="contained" color="error" onClick={() => declineLeaveRequest(request.userPermissionId)}>
-                                            {language === 'en' ? 'Decline' : 'Reddet'}
+                                            {language === 'en' ? 'DECLINE' : 'Reddet'}
                                         </Button>
                                     </div>
                                 </div>
@@ -284,4 +284,18 @@ export default function LeaveRequestManagement() {
             </footer>
         </div>
     );
+}
+function translatePermissionType(permissionType) {
+    switch (permissionType) {
+        case 'ANNUAL':
+            return 'Yıllık İzin';
+        case 'SICK':
+            return 'Hastalık İzni';
+        case 'MATERNITY':
+            return 'Doğum İzni';
+        case 'EXCUSE_LEAVE':
+            return 'Mazeret İzni';
+        default:
+            return permissionType;
+    }
 }
