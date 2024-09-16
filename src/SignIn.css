@@ -17,7 +17,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
 .panel {
@@ -33,6 +33,7 @@
   min-height: 500px;
   height: auto; /* Allow height to be dynamic */
   margin: auto;
+  align-items: center;
 }
 
 .App-logo {
@@ -119,8 +120,8 @@ button:hover {
 
 .language-buttons {
   position: fixed;
-  bottom: 0; /* Butonları en alta sabitle */
-  left: 63%; /* Yatayda ortalamak için sol kenardan %50 uzaklık */
+  bottom: 10px;
+  left: 50%;
   transform: translateX(-50%); /* Sol kenardan %50 uzaklık aldıktan sonra tam ortalamak için düzeltme */
   display: flex;
   gap: 20px; /* Butonlar arasındaki boşluk */
@@ -128,7 +129,7 @@ button:hover {
 }
 
 .language-buttons button {
-  padding: 7px 5px;
+  padding: 7px 12px;
   font-size: 1rem;
   background-color: #0D245D;
   border: none;
