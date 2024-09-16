@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
-import logo from './logo.svg';
+import logo from './media/logo.svg';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import Box from '@mui/material/Box';
 import ImageList from '@mui/material/ImageList';
 import ImageListItem from '@mui/material/ImageListItem';
-import zaferImage from './ZaferB.jpg';
+import zaferImage from './media/ZaferB.jpg';
 
 export default function HomePage() {
   const navigate = useNavigate();

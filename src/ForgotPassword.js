@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './ForgotPassword.css';
-import logoo from './logo.svg';
+import logoo from './media/logo.svg';
 import { useNavigate } from 'react-router-dom';
 
 function ForgotPassword() {
