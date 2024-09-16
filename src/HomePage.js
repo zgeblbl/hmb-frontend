@@ -182,10 +182,13 @@ export default function HomePage() {
         }}
       >
         <MenuItem onClick={() => navigate('/profile-settings')}>
-          {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
+        {language === 'en' ? 'Profile Settings' : 'Profil Ayarları'}
+        </MenuItem>
+        <MenuItem onClick={() => navigate('/leave-request-view')}>
+        {language === 'en' ? 'Leave Requests' : 'İzin Başvurularım'}
         </MenuItem>
         <MenuItem onClick={handleLogout}>
-          {language === 'en' ? 'Logout' : 'Çıkış Yap'}
+        {language === 'en' ? 'Logout' : 'Çıkış Yap'}
         </MenuItem>
       </Menu>
 

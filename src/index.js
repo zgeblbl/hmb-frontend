@@ -16,6 +16,7 @@ import AdminMessage from './AdminMessage';
 import AdminSettings from './AdminSettings';
 import AddUser from './AddUser';
 import LeaveRequestManagement from './LeaveRequestManagement';
+import LeaveRequestView from './LeaveRequestView';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -35,6 +36,7 @@ root.render(
         <Route path="/admin-settings" element={<AdminSettings/>} />
         <Route path="/add-user" element={<AddUser/>} />
         <Route path="/leave-request-management" element={<LeaveRequestManagement/>} />
+        <Route path="/leave-request-view" element={<LeaveRequestView/>} />
       </Routes>
     </Router>
   </React.StrictMode>
