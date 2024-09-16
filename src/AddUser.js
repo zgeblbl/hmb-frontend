@@ -71,10 +71,28 @@ export default function AddUser() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         const deptId = parseInt(departmentId);
         const ttlId = parseInt(titleId);
+        const validIds = [1, 2, 3, 4, 5, 6, 7];
 
+        // Check if the departmentId is valid
+        if (!validIds.includes(deptId)) {
+            setErrorMessage(language === 'en' ? 'Please enter a valid department ID.' : 'Lütfen geçerli bir departman ID girin.');
+            return;
+        }
+    
+        // Check if the titleId is valid
+        if (!validIds.includes(ttlId)) {
+            setErrorMessage(language === 'en' ? 'Please enter a valid title ID.' : 'Lütfen geçerli bir unvan ID girin.');
+            return;
+        }
+    
+        // Check if TCKN is a valid 11-character long number
+        if (!/^\d{11}$/.test(tckn)) {
+            setErrorMessage(language === 'en' ? 'Please enter a valid TCKN.' : 'Lütfen geçerli bir TCKN girin.');
+            return;
+        }
+        
         if (!firstName || !lastName || !email || !tckn || !password || isNaN(deptId) || isNaN(ttlId)) {
             setErrorMessage(language === 'en' ? 'All fields are required.' : 'Tüm alanlar gereklidir.');
             return;
