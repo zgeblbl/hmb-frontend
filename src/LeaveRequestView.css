@@ -83,7 +83,7 @@
 }
 
 .content {
-    padding: 20px;
+    padding: 30px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -98,4 +98,65 @@
     bottom: 0;
     padding: 20px 0;
     font-size: 14px;
+}
+
+/* Leave Requests Container */
+.leave-requests-container {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Leave Request Box */
+.leave-request-box {
+    padding: 15px;
+    border-radius: 12px;
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.leave-request-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+/* Leave Request Summary */
+.leave-request-summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 16px;
+    color: #002B5C;
+}
+
+/* Leave Request Details */
+.leave-request-details {
+    margin-top: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+/* Button Hover Effects */
+.navbar-links li,
+.profile-initials {
+    transition: all 0.3s;
+}
+
+.navbar-links li:hover,
+.profile-initials:hover {
+    background-color: #4A90E2;
+    color: #fff;
+    border-radius: 8px;
+    padding: 5px;
+}
+.page-title {
+    color: #ffffff;
+    background-color: #002B5C;
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 26px;
+    margin-bottom: 30px;
 }

@@ -1,15 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import './LeaveApplication.css';
+import './LeaveRequestView.css';
 import logo from './logo.svg';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import TextField from '@mui/material/TextField';
-import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 
 export default function LeaveRequestView(){
     const navigate = useNavigate();
@@ -22,6 +19,8 @@ export default function LeaveRequestView(){
     const [titleId, setTitleId] = useState(null);
     // UserName menüsü için state
     const [profileAnchorEl, setProfileAnchorEl] = useState(null);
+    const [leaveRequests, setLeaveRequests] = useState([]);
+    const [expandedRequestId, setExpandedRequestId] = useState(null);
 
     // Profil menüsünü açma/kapama
     const handleProfileMenuOpen = (event) => {
@@ -77,6 +76,30 @@ export default function LeaveRequestView(){
         const userInitials = storedUserName.split(' ').map(name => name[0]).join('');
         setInitials(userInitials);
     }, []);
+
+    useEffect(() => {
+        const fetchLeaveRequests = async () => {
+            const userId = localStorage.getItem('userId');
+            try {
+                const response = await fetch(`http://localhost:9090/api/hmb/permissions/getUserPermissions/${userId}`);
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                const data = await response.json();
+                // Assuming your API returns an array of leave requests
+                setLeaveRequests(data);
+            } catch (error) {
+                console.error('Error fetching leave requests:', error);
+            }
+        };
+        fetchLeaveRequests();
+
+    }, []);
+    
+
+    const handleRequestToggle = (requestId) => {
+        setExpandedRequestId(expandedRequestId === requestId ? null : requestId);
+    };
 
 
     return (
@@ -137,7 +160,6 @@ export default function LeaveRequestView(){
                     </MenuItem>
                 )}
             </Menu>
-
             {/* Profile menu */}
             <Menu
                 anchorEl={profileAnchorEl}
@@ -166,6 +188,42 @@ export default function LeaveRequestView(){
                 </MenuItem>
             </Menu>
             <main className="content">
+            <h2 className="page-title">{language === 'en' ? 'Leave Requests' : 'İzin Başvurularım'}</h2>
+                <div className="leave-requests-container">
+                    {leaveRequests.map(request => (
+                        <Box
+                            key={request.userPermissionId}
+                            className="leave-request-box"
+                            onClick={() => handleRequestToggle(request.userPermissionId)}
+                            style={{ padding: '20px', marginBottom: '15px', fontSize: '18px' }}
+                        >
+                            <div className="leave-request-summary">
+                                <span>{language === 'en' ? request.permissionType : translatePermissionType(request.permissionType)}</span>
+                                {/* Spacer for more separation */}
+                                <span style={{ margin: '0 15px' }}>  </span>
+
+                                {/* Approval status with conditional styling */}
+                                <span 
+                                    style={{ 
+                                        color: request.permissionApproval === 'APPROVED' ? 'green' : 
+                                            request.permissionApproval === 'DECLINED' ? 'red' : 'black',
+                                            fontWeight: 'bold'
+                                    }}
+                                >
+                                    {language === 'en' ? request.permissionApproval : translatePermissionApproval(request.permissionApproval)}
+                                </span>
+                                {expandedRequestId === request.userPermissionId ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+                            </div>
+                            {expandedRequestId === request.userPermissionId && (
+                                <div className="leave-request-details">
+                                    <p>{language === 'en' ? 'Start Date:' : 'Başlangıç Tarihi:'} {request.startDate}</p>
+                                    <p>{language === 'en' ? 'End Date:' : 'Bitiş Tarihi:'} {request.endDate}</p>
+                                    <p>{language === 'en' ? 'Approval Date:' : 'Onay Tarihi:'} {request.approvalDate ? request.approvalDate : (language === 'en' ? 'Not Available' : 'Mevcut Değil')}</p>
+                                </div>
+                            )}
+                        </Box>
+                    ))}
+                </div>
 
             </main>
             <footer className="footer">
@@ -177,5 +235,31 @@ export default function LeaveRequestView(){
 
 
     );
+}
 
+function translatePermissionType(permissionType) {
+    switch (permissionType) {
+        case 'ANNUAL':
+            return 'Yıllık İzin';
+        case 'SICK':
+            return 'Hastalık İzni';
+        case 'MATERNITY':
+            return 'Doğum İzni';
+        case 'EXCUSE_LEAVE':
+            return 'Mazeret İzni';
+        default:
+            return permissionType;
+    }
+}
+function translatePermissionApproval(permissionApproval) {
+    switch (permissionApproval) {
+        case 'APPROVED':
+            return 'ONAYLANDI';
+        case 'PENDING':
+            return 'BEKLEMEDE';
+        case 'DECLINED':
+            return 'REDDEDİLDİ';
+        default:
+            return permissionApproval;
+    }
 }
