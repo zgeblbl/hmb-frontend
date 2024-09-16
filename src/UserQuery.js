@@ -242,7 +242,7 @@ export default function UserQuery() {
                     </div>
                     <div className="form-field">
                         <TextField
-                            label="İsim"
+                            label={language === 'en' ? 'First Name' : 'İsim'}
                             fullWidth
                             margin="normal"
                             value={firstName}
@@ -251,7 +251,7 @@ export default function UserQuery() {
                     </div>
                     <div className="form-field">
                         <TextField
-                            label="Soyisim"
+                            label={language === 'en' ? 'Last Name' : 'Soyisim'}
                             fullWidth
                             margin="normal"
                             value={lastName}
@@ -279,7 +279,7 @@ export default function UserQuery() {
                                    rowsPerPageOptions={[]}
                                />
                                 ) : (
-                                    <Typography>No results found</Typography>
+                                    <Typography>{language === 'en' ? 'No results found' : 'Sonuç bulunamadı'}</Typography>
                                 )}
                             </Box>
                         )}

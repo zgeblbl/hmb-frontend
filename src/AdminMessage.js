@@ -176,10 +176,10 @@ function AdminMessage() {
             ) : (
               sortedMessages.map((message) => (
                 <div key={message.id} style={styles.messageBox}>
-                <p><strong>İsim:</strong> {message.name}</p>
+                <p><strong>{language === 'en' ? 'Name:' : 'Ad Soyad:'}</strong> {message.name}</p>
                 <p><strong>Email:</strong> {message.email}</p>
-                <p><strong>Mesaj:</strong> {message.messageContent}</p> {/* Mesaj içeriğini doğru gösteriyoruz */}
-                <p><strong>Tarih:</strong> {new Date(message.createdAt).toLocaleString()}</p> {/* Tarih formatı */}
+                <p><strong>{language === 'en' ? 'Message:' : 'Mesaj:'}</strong> {message.messageContent}</p> {/* Mesaj içeriğini doğru gösteriyoruz */}
+                <p><strong>{language === 'en' ? 'Date:' : 'Tarih:'}</strong> {new Date(message.createdAt).toLocaleString()}</p> {/* Tarih formatı */}
             </div>
               ))
             )}
