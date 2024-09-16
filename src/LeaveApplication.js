@@ -111,13 +111,13 @@ export default function LeaveApplication() {
         const leaveData = {
             startDate,
             endDate,
-            isPermissionApproved: null, // Default to false, or set based on your logic
-            approvalDate: '', // Empty initially, set if needed
+            approvalDate: '',
             isPermissionDeleted: false,
             user: {
-                userId: userId // Or get the actual userId dynamically
+                userId: userId
             },
-            permissionType: leaveType
+            permissionType: leaveType,
+            permissionApproval: 'PENDING'
         };
     
         try {

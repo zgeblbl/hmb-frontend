@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import './HomePage';
 import { useNavigate} from 'react-router-dom';
 import logo from './logo.svg';
 import Menu from '@mui/material/Menu';
@@ -188,7 +187,6 @@ export default function ProfileSettings() {
                     {language === 'en' ? 'Logout' : 'Çıkış Yap'}
                 </MenuItem>
             </Menu>
-
             <main className="content">
                 <Box className="password-change-panel" 
                     sx={{ 
@@ -210,20 +208,20 @@ export default function ProfileSettings() {
                         {language === 'en' ? 'Change Password' : 'Şifre Değiştir'}
                     </Typography>
                     <div className="form-field" style={{ width: '100%' }}>
-                        <TextField
-                            label={language === 'en' ? 'Current Password' : 'Mevcut Şifre'}
-                            variant="outlined"
-                            type="password"
-                            fullWidth
-                            margin="normal"
-                            value={currentPassword}
-                            onChange={(e) => setCurrentPassword(e.target.value)}
-                        />
+                    <TextField
+                        label={language === 'en' ? 'Current Password' : 'Mevcut Şifre'}
+                        variant="outlined"
+                        type="password"
+                        fullWidth
+                        margin="normal"
+                        value={currentPassword}
+                        onChange={(e) => setCurrentPassword(e.target.value)}
+                       
+                    />
                     </div>
                     <div className="form-field" style={{ width: '100%' }}>
                         <TextField
                             label={language === 'en' ? 'New Password' : 'Yeni Şifre'}
-                            variant="outlined"
                             type="password"
                             fullWidth
                             margin="normal"
@@ -234,7 +232,6 @@ export default function ProfileSettings() {
                     <div className="form-field" style={{ width: '100%' }}>
                         <TextField
                             label={language === 'en' ? 'Confirm New Password' : 'Yeni Şifreyi Onayla'}
-                            variant="outlined"
                             type="password"
                             fullWidth
                             margin="normal"
