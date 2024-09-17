@@ -1,70 +1,129 @@
-# Getting Started with Create React App
+# HMB Frontend
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is the frontend of the HMB project, developed using React. The frontend interacts with the Spring Boot backend to provide functionalities such as user authentication, user queries, language switching, and leave applications.  This project was completed as part of an internship at HMB/Bilgi Teknolojileri Genel Müdürlüğü over a span of 20 days.
 
-## Available Scripts
+## Table of Contents
 
-In the project directory, you can run:
+1. [Project Overview](#project-overview)
+2. [Features](#features)
+3. [Tech Stack](#tech-stack)
+4. [Getting Started](#getting-started)
+5. [Project Structure](#project-structure)
+6. [Usage](#usage)
+7. [Authors](#authors)
+8. [Contributing](#contributing)
+9. [License](#license)
 
-### `npm start`
+## Project Overview
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+The HMB frontend is a React application designed to provide an interface for various features such as user sign-up, authentication, language switching, and leave applications. It communicates with the HMB backend to retrieve, display, and manage data. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Features
 
-### `npm test`
+- **User Authentication**: Allows users to sign in and authenticate.
+- **Dashboard/Homepage**: A landing page with images.
+- **User Query**: Collects and displays user data based on TCKN, name, and surname.
+- **Leave Application**: Users can apply for different types of leave (annual, sick, etc.) through a form.
+- **Language Switching**: Provides buttons to toggle between English and Turkish.
+- **Dynamic Navigation**: Implemented using React Router for seamless navigation between different pages.
+- **Contact Page**: Allows users to send messages or inquiries to the admin.
+- **Admin Panel**: Accessible to administrators for managing user information and adding users to the system.
+- **Approve/Decline Leave Requests**: Executives can view, approve or decline permission requests.
+- **Profile Settings**: Users can change their passwords.
+ 
+## Tech Stack
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- **React**: A JavaScript library for building user interfaces.
+- **CSS**: For styling components and pages.
+- **React Router**: For navigation between different pages.
+- **Node.js & npm**: For managing dependencies and running the development server.
 
-### `npm run build`
+## Getting Started
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+To get started with this project, follow these steps:
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Prerequisites
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+- Node.js and npm installed on your machine.
+- The HMB backend running locally or on a server.
 
-### `npm run eject`
+### Installation
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+1. Clone the repository:
+```bash
+   git clone https://github.com/zgeblbl/hmb-frontend.git
+```
+2. Navigate to the project directory:
+```bash
+   cd hmb-frontend
+``` 
+3. Install the required dependencies:
+```bash
+   npm install
+```
+4. Configure the backend API URL in the project (if needed). Locate the file where API URLs are defined and update the base URL to match your backend:
+```bash
+   const API_BASE_URL = 'http://localhost:9090';
+```
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### Running the Application
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+Start the development server:
+```bash
+npm start
+```
+The application will run locally on http://localhost:3000. You can access it in your web browser.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+### Building for Production
 
-## Learn More
+To create an optimized production build, run:
+```bash
+npm run build
+```
+This command generates a build folder containing the static files for deployment.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Project Structure
+Here is a brief overview of the project's file structure:
+```
+hmb-frontend/
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+  public/                   // Public assets (e.g., index.html)
+  src/                      // Source code
+    media/                // Media assets (e.g., images, icons)
+    App.js                // Main application component
+    index.js              // Entry point of the React application
+    other files
 
-### Code Splitting
+  package.json              // Project metadata and dependencies
+```
+## Usage
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+- **Sign In**: Users can log in using their credentials. Authentication is handled via the backend.
+- **Dashboard/Homepage**: Users will land on the homepage upon logging in. The dashboard provides a visual overview with images to users.
+- **Leave Application**: Users can apply for leave through a form and submit it for approval.
+- **Language Switching**: Toggle between English and Turkish using the language buttons.
+- **User Query**: Search users based on TCKN, name, or surname.
+- **Contact Page**: Users can submit queries or feedback to the admin through a contact form.
+- **Admin Panel**: Administrators can log in to access the admin panel, where they can manage user data and review contact messages.
+- **Approve/Decline Leave Requests**: Executives can navigate to the leave request section, view all pending requests, and choose to approve or decline them.
+- **Profile Settings**: Users can go to their profile settings to change their passwords.
 
-### Analyzing the Bundle Size
+## Authors
+- Özge BÜLBÜL
+- Eda Eylül ASLAN
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Contributing
+Contributions are welcome! Please follow these steps:
 
-### Making a Progressive Web App
+1. Fork the repository.
+2. Create a new branch (git checkout -b feature/YourFeature).
+3. Make your changes.
+4. Commit your changes (git commit -m 'Add your feature').
+5. Push to the branch (git push origin feature/YourFeature).
+6. Open a pull request.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+## License
+This project is licensed under the MIT License.
 
-### Advanced Configuration
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
 
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
